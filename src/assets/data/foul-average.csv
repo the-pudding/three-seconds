@@ -1,0 +1,43 @@
+"foul","average","use"
+"Away From Play",27.3726708074534,
+"Basket From Below",35.5,
+"Clear Path",26.8928571428571,
+"Defensive 3 Seconds",19.1894664842681,true
+"Defensive Goaltending",25.0392038600724,true
+"Delay Of Game",24.0239071038251,true
+"Delay Technical",32.35,
+"Discontinue Dribble",24.3038461538462,
+"Double Lane",28.2380952380952,
+"Double Personal",30.9137931034483,
+"Double Technical ",31.2697368421053,
+"Eight Second Violation",37.3571428571429,
+"Excess Timeout Technical",45.2,
+"Five Second Violation",30.2795698924731,
+"Flagrant 1 ",30.1172638436482,
+"Flagrant 2 ",36.4285714285714,
+"Foul",25.6856530028599
+"Hanging Technical",24.125,
+"Illegal Assist",27.0625,
+"Illegal Screen",19.6666666666667,
+"Inbound Foul",27.8661417322835,
+"Jump Ball Violation",20.3461538461538,
+"Kicked Ball",23.4390789894468,true
+"Lane Violation",25.8964285714286,
+"Loose Ball",26.5088691796009,true
+"Offensive",25.4573801188635,true
+"Offensive 3 Seconds",23.3113708820404,true
+"Offensive Charge",25.463300125959,true
+"Offensive Goaltending",24.6993006993007,
+"Palming Turnover",24.9822222222222,
+"Personal",26.256032065711,true
+"Personal Block",25.8449559918754,true
+"Personal Take",37.9803921568627,true
+"Punched Ball",24.25,
+"Shooting",25.6649661574719,true
+"Shooting Block",25.8606027987083,true
+"Swinging Elbows",25,
+"Taunting Technical",28.125,
+"Technical",28.4022480931353,true
+"Too Many Players Technical",26.8333333333333,
+"Traveling",24.1399371069182,true
+"Unsportsmanlike Technical",32.2857142857143,
