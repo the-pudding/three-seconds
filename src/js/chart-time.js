@@ -18,7 +18,7 @@ function reveal() {
     .transition()
     .duration(1000)
     .delay((d, i) => i * 10)
-    .ease(d3.easeBackOut)
+    .ease(d3.easeCubicInOut)
     .attr('y', d => height - scaleY(d.count))
     .attr('height', d => scaleY(d.count));
 }
@@ -42,7 +42,7 @@ function init({ data, w, h }) {
   const totalCount = d3.sum(minuteData, d => d.count);
   const targetCount = Math.round(totalCount / minuteData.length);
 
-  width = w * 0.8 - MARGIN * 2;
+  width = w - MARGIN * 2;
   height = width;
 
   scaleX = d3
