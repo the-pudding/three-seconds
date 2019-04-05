@@ -1,33 +1,72 @@
 /* global d3 */
 const FOUL = 'Defensive 3 Seconds';
-const MARGIN = 32;
+const MINUTES = d3.range(1, 49);
 
 const $figure = d3.select('#time');
 const $svg = $figure.select('svg');
 const $axis = $svg.select('.g-axis');
 const $vis = $svg.select('.g-vis');
 
-let scaleX = null;
-let scaleY = null;
-let width = 0;
-let height = 0;
+let chartWidth = 0;
+let chartHeight = 0;
+let maxCount = 0;
+let totalCount = 0;
+let targetCount = 0;
 
-function reveal() {
-  $vis
-    .selectAll('rect')
-    .transition()
-    .duration(1000)
-    .delay((d, i) => i * 10)
-    .ease(d3.easeCubicInOut)
-    .attr('y', d => height - scaleY(d.count))
-    .attr('height', d => scaleY(d.count));
+const scaleX = d3
+  .scaleBand()
+  .domain(MINUTES)
+  .paddingInner(0.1);
+
+const scaleY = d3.scaleLinear().clamp(true);
+
+function run() {
+  return new Promise((resolve, reject) => {
+    $vis
+      .selectAll('rect')
+      .transition()
+      .duration(1000)
+      .delay((d, i) => i * 10)
+      .ease(d3.easeCubicInOut)
+      .attr('y', d => chartHeight - scaleY(d.count))
+      .attr('height', d => scaleY(d.count))
+      .on('end', (d, i, n) => {
+        if (i === n.length - 1) resolve();
+      });
+  });
 }
 
-function init({ data, w, h }) {
-  const minutes = d3.range(1, 49);
+function resize({ width, height }) {
+  const margin = Math.floor(width * 0.04);
+  chartWidth = width - margin * 2;
+  chartHeight = chartWidth;
+
+  scaleX.rangeRound([0, chartWidth]);
+
+  scaleY.range([0, chartHeight]);
+
+  $figure
+    .style('width', `${chartWidth + margin * 2}px`)
+    .style('height', `${chartHeight + margin * 2}px`);
+
+  $svg
+    .style('width', `${chartWidth + margin * 2}px`)
+    .style('height', `${chartHeight + margin * 2}px`);
+
+  $vis.attr('transform', `translate(${margin}, ${margin})`);
+
+  $vis
+    .selectAll('rect')
+    .attr('x', d => scaleX(d.minute))
+    .attr('y', d => chartHeight - scaleY(targetCount))
+    .attr('width', scaleX.bandwidth())
+    .attr('height', scaleY(targetCount));
+}
+
+function init({ data }) {
   const data3 = data.filter(d => d.foul === FOUL).filter(d => d.minute <= 48);
 
-  const minuteData = minutes.map(d => {
+  const minuteData = MINUTES.map(d => {
     const match = data3.find(v => v.minute === d);
     return {
       minute: d,
@@ -38,43 +77,20 @@ function init({ data, w, h }) {
     };
   });
 
-  const maxCount = d3.max(minuteData, d => d.count);
-  const totalCount = d3.sum(minuteData, d => d.count);
-  const targetCount = Math.round(totalCount / minuteData.length);
+  maxCount = d3.max(minuteData, d => d.count);
+  totalCount = d3.sum(minuteData, d => d.count);
+  targetCount = Math.round(totalCount / minuteData.length);
 
-  width = w - MARGIN * 2;
-  height = width;
-
-  scaleX = d3
-    .scaleBand()
-    .domain(minutes)
-    .rangeRound([0, width])
-    .paddingInner(0.1);
-
-  scaleY = d3
-    .scaleLinear()
-    .domain([0, maxCount])
-    .range([0, height])
-    .clamp(true);
-
-  $figure
-    .style('width', `${width + MARGIN * 2}px`)
-    .style('height', `${height + MARGIN * 2}px`);
-
-  $svg
-    .style('width', `${width + MARGIN * 2}px`)
-    .style('height', `${height + MARGIN * 2}px`);
-
-  $vis.attr('transform', `translate(${MARGIN}, ${MARGIN})`);
+  scaleY.domain([0, maxCount]);
 
   $vis
     .selectAll('rect')
     .data(minuteData)
     .join('rect')
-    .attr('x', d => scaleX(d.minute))
-    .attr('y', d => height - scaleY(targetCount))
-    .attr('width', scaleX.bandwidth())
-    .attr('height', scaleY(targetCount));
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 0)
+    .attr('height', 0);
 }
 
-export default { init, reveal };
+export default { init, resize, run };

@@ -1,45 +1,33 @@
 /* global d3 */
-import debounce from 'lodash.debounce';
-import isMobile from './utils/is-mobile';
-import graphic from './graphic';
-import footer from './footer';
+import '@babel/polyfill';
+import './utils/render-d3-video';
+import loadData from './load-data';
+import ChartTime from './chart-time';
+import ChartAverage from './chart-average';
 
-const $body = d3.select('body');
-let previousWidth = 0;
+const $main = d3.select('main');
 
-function resize() {
-  // only do resize on width changes, not height
-  // (remove the conditional if you want to trigger on height change)
-  const width = $body.node().offsetWidth;
-  if (previousWidth !== width) {
-    previousWidth = width;
-    graphic.resize();
-  }
-}
+window.renderStart = async ({ width, height }) => {
+  $main.style('width', `${width}px`).style('height', `${height}px`);
+  ChartTime.resize({ width, height });
+  ChartAverage.resize({ width, height });
+  await ChartAverage.run();
+  await ChartTime.run();
+};
 
-function setupStickyHeader() {
-  const $header = $body.select('header');
-  if ($header.classed('is-sticky')) {
-    const $menu = $body.select('.header__menu');
-    const $toggle = $body.select('.header__toggle');
-    $toggle.on('click', () => {
-      const visible = $menu.classed('is-visible');
-      $menu.classed('is-visible', !visible);
-      $toggle.classed('is-visible', !visible);
-    });
-  }
+function devStart() {
+  if (window.currentTime === undefined)
+    window.renderStart({ width: 1080, height: 1920 });
 }
 
 function init() {
-  // add mobile class to body tag
-  $body.classed('is-mobile', isMobile.any());
-  // setup resize event
-  window.addEventListener('resize', debounce(resize, 150));
-  // setup sticky header menu
-  // setupStickyHeader();
-  // kick off graphic code
-  graphic.init();
-  footer.init();
+  loadData()
+    .then(([time, average]) => {
+      ChartTime.init({ data: time });
+      ChartAverage.init({ data: average });
+      d3.timeout(devStart, 100);
+    })
+    .catch(console.error);
 }
 
 init();
