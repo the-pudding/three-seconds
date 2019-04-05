@@ -24,11 +24,11 @@ window.renderStart = async ({ width, height }) => {
   Average.resize({ width, height });
   Report.resize({ width, height });
   Outro.resize({ width, height });
-  await Intro.run();
-  await Refresher.run();
-  await Average.run();
-  await Time.run();
-  // await Report.run();
+  // await Intro.run();
+  // await Refresher.run();
+  // await Average.run();
+  // await Time.run();
+  await Report.run();
   // await Outro.run();
 };
 
