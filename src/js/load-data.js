@@ -12,7 +12,7 @@ function loadA(file) {
       .then(result => {
         const clean = result.map(d => ({
           ...d,
-          minute: +d.minute,
+          minute: +d.minute - 1,
           count: +d.count,
         }));
         resolve(clean);

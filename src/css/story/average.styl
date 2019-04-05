@@ -1,4 +1,7 @@
 #average
+	figure
+		top 50%
+		left 0
 	.g-axis
 		line
 			stroke-dasharray 8px 8px
@@ -10,11 +13,10 @@
 	.foul
 		circle
 			stroke $fg
-			stroke-width 4px
 			fill $bg
 	
 		text
-			fill lighten($gray, 10)
+			fill $gray
 	
 		&.is-highlight
 			circle

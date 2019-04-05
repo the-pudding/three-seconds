@@ -1,7 +1,24 @@
 /* CUSTOM STORY STYLE */
 body
 	background-color limegreen
+	font-family $sans-display
 
+h1, p
+	margin 0
+	padding 0 5%
+	width 100%
+	line-height 1
+	font-weight 900
+	position absolute
+	top 0
+	left 0
+	text-align center
+
+p
+	line-height 1.2
+	top auto
+	bottom 5%
+	
 main
 	position relative
 	overflow hidden
@@ -13,11 +30,18 @@ section
 	left 0
 	width 100%
 	height 100%
+	&.is-hidden
+		hidden(invisible)
 
 figure
 	position absolute
-	bottom 0
+	top 0
 	left 0
+
+svg
+	display block
+	width 100%
+	height 100%
 
 svg text
 	font-family $sans-display

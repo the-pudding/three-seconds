@@ -20,24 +20,31 @@
 
 <body>
 
-	{{!-- {{> base/header 'sticky'}} --}}
-
 	<main id='content'>
-		<figure id='time'>
-			<svg>
-				<g class='g-axis'></g>
-				<g class='g-vis'></g>
-			</svg>
-		</figure>
-		<figure id='average'>
-			<svg>
-				<g class='g-axis'></g>
-				<g class='g-vis'></g>
-			</svg>
-		</figure>
-		<section id='stickers'>
-			<img id='lance' src='assets/images/lance.png'>
+
+		{{#each doc.section }}
+		<section id='{{id}}' class='is-hidden'>
+
+			{{#ifEquals id 'intro' }}
+			<h1>{{{title}}}</h1>
+			{{/ifEquals }}
+
+			{{#ifEquals chart 'svg' }}
+			<figure>
+				<svg>
+					<g class='g-axis'></g>
+					<g class='g-vis'></g>
+				</svg>
+			</figure>
+			{{/ifEquals }}
+
+			<p>{{{text}}}</p>
 		</section>
+		{{/each}}
+
+		<div id='stickers'>
+			<img id='lance' src='assets/images/lance.png'>
+		</div>
 	</main>
 
 	{{!-- {{> base/footer }} --}}
