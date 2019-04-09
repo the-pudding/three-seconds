@@ -1,9 +1,16 @@
-/* global d3 */
+/* global d3 WIDTH HEIGHT */
+import slide from './slide';
+import animateText from './animate-text';
+import pause from './pause';
+
 const $section = d3.select('#outro');
 
-async function run() {}
+async function run() {
+  await slide({ sel: $section, state: 'enter' });
+  await slide({ sel: $section, state: 'exit' });
+}
 
-function resize({ width, height }) {}
+function resize() {}
 
 function init() {}
 

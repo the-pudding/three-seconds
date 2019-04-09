@@ -1,4 +1,5 @@
-/* global d3 */
+/* global d3 WIDTH HEIGHT */
+import slide from './slide';
 import animateText from './animate-text';
 import pause from './pause';
 
@@ -85,9 +86,9 @@ function moveBars() {
 }
 
 async function run() {
-  $section.classed('is-hidden', false);
+  await slide({ sel: $section, state: 'enter' });
   await animateText({ sel: $p, visible: true });
-  await toggleFigure({ visible: true, dur: 500 });
+  // await toggleFigure({ visible: true, dur: 500 });
   await pause(3);
   await moveBars();
   await pause(1);
@@ -99,16 +100,16 @@ async function run() {
   await pause(2);
   await quarter(4);
   await pause(2);
-  $section.classed('is-hidden', true);
+  await slide({ sel: $section, state: 'exit' });
   return true;
 }
 
-function resize({ width, height }) {
-  const margin = Math.floor(width * 0.04);
-  const strokeWidth = Math.floor(width * 0.005);
+function resize() {
+  const margin = Math.floor(WIDTH * 0.04);
+  const strokeWidth = Math.floor(WIDTH * 0.005);
 
-  chartWidth = width - margin * 2;
-  chartHeight = width - margin * 4;
+  chartWidth = WIDTH - margin * 2;
+  chartHeight = WIDTH - margin * 4;
 
   scaleX.rangeRound([0, chartWidth]);
 
@@ -146,7 +147,7 @@ function resize({ width, height }) {
     .attr('height', scaleY(targetCount))
     .style('stroke-width', strokeWidth);
 
-  toggleFigure({ visible: false });
+  // toggleFigure({ visible: false });
 }
 
 function init({ data }) {

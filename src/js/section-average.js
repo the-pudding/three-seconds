@@ -1,4 +1,5 @@
-/* global d3 */
+/* global d3 WIDTH HEIGHT */
+import slide from './slide';
 import animateText from './animate-text';
 import pause from './pause';
 
@@ -17,21 +18,6 @@ const scaleY = d3.scaleBand().paddingInner(0);
 
 let chartWidth = 0;
 let chartHeight = 0;
-
-function toggleFigure({ visible = false, dur = 0 }) {
-  const figureW = $figure.node().offsetWidth;
-  const figureH = $figure.node().offsetHeight;
-  const x = visible ? 0 : -figureW;
-  const y = -figureH / 2;
-  return new Promise(resolve => {
-    $figure
-      .transition()
-      .duration(dur)
-      .ease(d3.easeCubicInOut)
-      .style('transform', `translate(${x}px, ${y}px)`)
-      .on('end', resolve);
-  });
-}
 
 function toggleLance({ visible = false, dur = 0 }) {
   const offsetH = $section.node().offsetHeight * 0.5;
@@ -68,27 +54,32 @@ function moveDots() {
 }
 
 async function run() {
-  $section.classed('is-hidden', false);
+  await slide({ sel: $section, state: 'enter' });
   await animateText({ sel: $p, visible: true });
-  await toggleFigure({ visible: true, dur: 500 });
   await pause(3);
   await toggleLance({ visible: true, dur: 400 });
   await moveDots();
-  await pause(1);
+  await pause(0.5);
   await toggleLance({ visible: false, dur: 400 });
   await pause(3);
-  $section.classed('is-hidden', true);
+  await slide({ sel: $section, state: 'exit' });
   return true;
 }
 
-function resize({ width, height }) {
-  const margin = Math.floor(width * 0.05);
-  const fontSize = Math.floor(width * 0.025);
-  const fontSizeAxis = Math.floor(width * 0.0175);
-  const radius = Math.floor(fontSize / 2);
-  const strokeWidth = Math.floor(width * 0.005);
+function resizeFigure() {
+  const figureH = $figure.node().offsetHeight;
+  const y = -figureH / 2;
+  $figure.style('transform', `translate(0, ${y}px)`);
+}
 
-  chartWidth = width - margin * 2;
+function resize() {
+  const margin = Math.floor(WIDTH * 0.05);
+  const fontSize = Math.floor(WIDTH * 0.025);
+  const fontSizeAxis = Math.floor(WIDTH * 0.0175);
+  const radius = Math.floor(fontSize / 2);
+  const strokeWidth = Math.floor(WIDTH * 0.005);
+
+  chartWidth = WIDTH - margin * 2;
   chartHeight = chartWidth;
 
   scaleX.range([0, chartWidth]);
@@ -124,7 +115,7 @@ function resize({ width, height }) {
 
   $axis.selectAll('text').style('font-size', `${fontSizeAxis}px`);
 
-  toggleFigure({ visible: false });
+  resizeFigure();
   toggleLance({ visible: false });
 }
 

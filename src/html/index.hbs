@@ -23,10 +23,11 @@
 	<main id='content'>
 
 		{{#each doc.section }}
-		<section id='{{id}}' class='is-hidden'>
+		<section id='{{id}}'>
 
 			{{#ifEquals id 'intro' }}
 			<h1>{{{title}}}</h1>
+			<div id='flipbook-1' class='flipbook' data-src='assets/videos/l2m' data-frames='159' data-rate='29.97'></div>
 			{{/ifEquals }}
 
 			{{#ifEquals chart 'svg' }}

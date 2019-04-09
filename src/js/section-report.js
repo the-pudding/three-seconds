@@ -1,4 +1,5 @@
-/* global d3 */
+/* global d3 WIDTH HEIGHT */
+import slide from './slide';
 import animateText from './animate-text';
 import pause from './pause';
 
@@ -7,14 +8,14 @@ const $p = $section.select('p');
 const $figure = $section.select('figure');
 
 async function run() {
-  $section.classed('is-hidden', false);
+  await slide({ sel: $section, state: 'enter' });
   await animateText({ sel: $p, visible: true });
   await pause(10);
-  $section.classed('is-hidden', true);
+  await slide({ sel: $section, state: 'exit' });
   return true;
 }
 
-function resize({ width, height }) {}
+function resize() {}
 
 function init() {
   const data = d3.range(138);
