@@ -10,8 +10,10 @@ async function preload(el) {
   const end = frames + 1;
   const images = d3.range(start, end);
 
-  for (const i of images) {
-    await loadImage(`${src}/${i}.png`);
+  if (!window.DEV) {
+    for (const i of images) {
+      await loadImage(`${src}/${i}.png`);
+    }
   }
 
   $f.append('img').attr('src', `${src}/${start}.png`);
@@ -19,9 +21,9 @@ async function preload(el) {
 }
 
 async function init() {
-  const flipbooks = d3.selectAll('.flipbook').nodes();
-  for (const f of flipbooks) {
-    await preload(f);
+  const nodes = d3.selectAll('.flipbook').nodes();
+  for (const n of nodes) {
+    await preload(n);
   }
   return Promise.resolve();
 }

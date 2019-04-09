@@ -7,6 +7,7 @@
 			stroke-dasharray 8px 8px
 			stroke-opacity 0.33
 			stroke-width 2px
+			stroke $bg-invert
 		path
 			display none
 		
@@ -14,12 +15,16 @@
 		circle
 			stroke $fg
 			fill $bg
+			stroke-opacity 0.5
 	
 		text
-			fill $gray
+			fill $fg
+			fill-opacity 0.5
 	
 		&.is-highlight
 			circle
 				fill $primary
+				stroke-opacity 1
 			text
 				fill $fg
+				fill-opacity 1

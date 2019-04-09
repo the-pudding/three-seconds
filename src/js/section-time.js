@@ -2,6 +2,7 @@
 import slide from './slide';
 import animateText from './animate-text';
 import pause from './pause';
+import colors from './colors';
 
 const FOUL = 'Defensive 3 Seconds';
 const MINUTES = d3.range(0, 48);
@@ -9,7 +10,7 @@ const QUARTER_MINS = 12;
 const BIN = 1;
 
 const $section = d3.select('#time');
-const $p = d3.select('p');
+const $p = $section.select('p');
 const $figure = $section.select('figure');
 const $svg = $figure.select('svg');
 const $axis = $svg.select('.g-axis');
@@ -46,7 +47,7 @@ function quarter(q) {
       .duration(500)
       // .delay((d, i) => i * 10)
       .ease(d3.easeCubicInOut)
-      .style('fill', d => (d.quarter === q ? '#282828' : '#949494'))
+      .style('fill', d => (d.quarter === q ? colors.fg : colors.bgInvert))
       .style('opacity', d => (d.quarter === q ? 1 : 0.5))
       .on('end', (d, i, n) => {
         if (i === n.length - 1) resolve();
@@ -88,20 +89,25 @@ function moveBars() {
 async function run() {
   await slide({ sel: $section, state: 'enter' });
   await animateText({ sel: $p, visible: true });
-  // await toggleFigure({ visible: true, dur: 500 });
   await pause(3);
   await moveBars();
   await pause(1);
   await quarter(1);
-  await pause(2);
+  await pause(1);
   await quarter(2);
-  await pause(2);
+  await pause(1);
   await quarter(3);
-  await pause(2);
+  await pause(1);
   await quarter(4);
-  await pause(2);
+  await pause(1);
   await slide({ sel: $section, state: 'exit' });
   return true;
+}
+
+function resizeFigure() {
+  const figureH = $figure.node().offsetHeight;
+  const y = -figureH / 2;
+  $figure.style('transform', `translate(0, ${y}px)`);
 }
 
 function resize() {
@@ -147,7 +153,7 @@ function resize() {
     .attr('height', scaleY(targetCount))
     .style('stroke-width', strokeWidth);
 
-  // toggleFigure({ visible: false });
+  resizeFigure();
 }
 
 function init({ data }) {

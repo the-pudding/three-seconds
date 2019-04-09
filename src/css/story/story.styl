@@ -1,6 +1,6 @@
 /* CUSTOM STORY STYLE */
 body
-	background-color limegreen
+	background-color $bg-invert
 	font-family $sans-display
 
 	
@@ -21,17 +21,23 @@ section
 		padding 0 5%
 		width 100%
 		line-height 1
-		font-weight 900
 		position absolute
 		top 0
 		left 0
 		text-align center
 		opacity 0
 
+	h1
+		font-weight 900
 	p
-		line-height 1.2
+		font-weight 700
+		line-height 1.25
 		top auto
 		bottom 5%
+		background-color rgba($white, 0.5)
+		max-width 90%
+		padding 2.5%
+		left 5%
 		
 figure
 	position absolute
@@ -45,6 +51,9 @@ svg
 
 svg text
 	font-family $sans-display
-	font-weight 900
+	font-weight 700
 	text-transform uppercase
+	fill $bg-invert
 
+em
+	color $primary-dark

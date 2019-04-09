@@ -7,7 +7,7 @@
 
 	<link inline rel='stylesheet' href='bundle.css' />
 
-	<link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900" rel="stylesheet">
+	{{!-- <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900" rel="stylesheet"> --}}
 
 	{{> base/font}}
 
@@ -27,7 +27,7 @@
 
 			{{#ifEquals id 'intro' }}
 			<h1>{{{title}}}</h1>
-			<div id='flipbook-1' class='flipbook' data-src='assets/videos/l2m' data-frames='159' data-rate='29.97'></div>
+			{{!-- <div id='flipbook-1' class='flipbook' data-src='assets/videos/l2m' data-frames='159' data-rate='29.97'></div> --}}
 			{{/ifEquals }}
 
 			{{#ifEquals chart 'svg' }}
@@ -51,12 +51,10 @@
 		{{/each}}
 
 		<div id='stickers'>
+			<img id='lebron' src='assets/images/lebron.png'>
 			<img id='lance' src='assets/images/lance.png'>
 		</div>
 	</main>
-
-	{{!-- {{> base/footer }} --}}
-
 
 	<script src='{{basepath}}assets/scripts/d3.v5.9.1.min.js'></script>
 	<script src='main.js?version={{timestamp}}' async></script>
