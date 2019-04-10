@@ -86,10 +86,23 @@ function moveBars() {
   });
 }
 
+function revealFigure() {
+  return new Promise(resolve => {
+    $figure
+      .transition()
+      .duration(500)
+      .ease(d3.easeCubicOut)
+      .style('opacity', 1)
+      .on('end', resolve);
+  });
+}
+
 async function run() {
   await slide({ sel: $section, state: 'enter' });
   await animateText({ sel: $p, visible: true });
-  await pause(3);
+  await pause(2);
+  revealFigure();
+  await pause(1);
   await moveBars();
   await pause(1);
   await quarter(1);
@@ -99,7 +112,7 @@ async function run() {
   await quarter(3);
   await pause(1);
   await quarter(4);
-  await pause(1);
+  await pause(2);
   await slide({ sel: $section, state: 'exit' });
   return true;
 }
@@ -115,7 +128,7 @@ function resize() {
   const strokeWidth = Math.floor(WIDTH * 0.005);
 
   chartWidth = WIDTH - margin * 2;
-  chartHeight = WIDTH - margin * 4;
+  chartHeight = HEIGHT * 0.67 - margin * 4;
 
   scaleX.rangeRound([0, chartWidth]);
 
@@ -153,7 +166,7 @@ function resize() {
     .attr('height', scaleY(targetCount))
     .style('stroke-width', strokeWidth);
 
-  resizeFigure();
+  // resizeFigure();
 }
 
 function init({ data }) {

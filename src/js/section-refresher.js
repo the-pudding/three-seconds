@@ -11,7 +11,6 @@ async function run() {
   await slide({ sel: $section, state: 'enter' });
   await animateText({ sel: $p, visible: true });
   await pause(5);
-  await animateText({ sel: $p, visible: false });
   await slide({ sel: $section, state: 'exit' });
   return true;
 }

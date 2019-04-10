@@ -1,4 +1,4 @@
-/* global d3 WIDTH HEIGHT */
+/* global d3 WIDTH HEIGHT FONT_SIZE */
 import slide from './slide';
 import animateText from './animate-text';
 import pause from './pause';
@@ -20,9 +20,9 @@ let chartWidth = 0;
 let chartHeight = 0;
 
 function toggleLance({ visible = false, dur = 0 }) {
-  const offsetH = $section.node().offsetHeight * 0.5;
-  const figureH = $figure.node().offsetHeight * 0.5;
+  const figureH = $figure.node().offsetHeight;
   const imgH = $lance.node().offsetHeight;
+  const offsetH = 0.05 * WIDTH;
   const top = offsetH + figureH - imgH;
   const x = visible ? 0 : $lance.node().offsetWidth;
 
@@ -53,16 +53,29 @@ function moveDots() {
   });
 }
 
+function revealFigure() {
+  return new Promise(resolve => {
+    $figure
+      .transition()
+      .duration(500)
+      .ease(d3.easeCubicOut)
+      .style('opacity', 1)
+      .on('end', resolve);
+  });
+}
+
 async function run() {
   await slide({ sel: $section, state: 'enter' });
   await animateText({ sel: $p, visible: true });
+  await pause(2);
+  await revealFigure();
   await pause(3);
   await toggleLance({ visible: true, dur: 400 });
   await moveDots();
   await pause(0.5);
   await toggleLance({ visible: false, dur: 400 });
   await pause(3);
-  await slide({ sel: $section, state: 'exit' });
+  // await slide({ sel: $section, state: 'exit' });
   return true;
 }
 
@@ -74,13 +87,15 @@ function resizeFigure() {
 
 function resize() {
   const margin = Math.floor(WIDTH * 0.05);
-  const fontSize = Math.floor(WIDTH * 0.025);
-  const fontSizeAxis = Math.floor(WIDTH * 0.0175);
-  const radius = Math.floor(fontSize / 2);
+  const fontSize = Math.floor(FONT_SIZE * 0.67);
+  const fontSizeAxis = Math.floor(FONT_SIZE * 0.25);
+  const radius = Math.floor(fontSize * 0.5);
   const strokeWidth = Math.floor(WIDTH * 0.005);
+  const axisStrokeWidth = strokeWidth * 0.5;
+  const axisStrokeDash = strokeWidth * 4;
 
   chartWidth = WIDTH - margin * 2;
-  chartHeight = chartWidth;
+  chartHeight = HEIGHT * 0.67 - margin * 2;
 
   scaleX.range([0, chartWidth]);
   scaleY.rangeRound([0, chartHeight]);
@@ -102,7 +117,7 @@ function resize() {
     .style('stroke-width', `${strokeWidth}px`);
   $vis
     .selectAll('text')
-    .attr('x', fontSize * 0.75)
+    .attr('x', fontSize)
     .attr('y', fontSize / 12)
     .style('font-size', `${fontSize}px`);
 
@@ -115,7 +130,21 @@ function resize() {
 
   $axis.selectAll('text').style('font-size', `${fontSizeAxis}px`);
 
-  resizeFigure();
+  $axis
+    .selectAll('line')
+    .style('stroke-width', `${axisStrokeWidth}px`)
+    .style('stroke-dasharray', `${axisStrokeDash}px ${axisStrokeDash}px`);
+
+  $svg
+    .select('.quarter--2')
+    .attr('transform', `translate(${WIDTH * 0.275}, ${margin})`)
+    .style('font-size', FONT_SIZE);
+  $svg
+    .select('.quarter--3')
+    .attr('transform', `translate(${WIDTH * 0.725}, ${margin})`)
+    .style('font-size', FONT_SIZE);
+
+  // resizeFigure();
   toggleLance({ visible: false });
 }
 
@@ -140,6 +169,18 @@ function init({ data }) {
         .attr('alignment-baseline', 'middle');
       return $g;
     });
+
+  $svg
+    .append('text')
+    .attr('class', 'quarter quarter--2')
+    .attr('text-anchor', 'middle')
+    .text('Q2');
+
+  $svg
+    .append('text')
+    .attr('class', 'quarter quarter--3')
+    .attr('text-anchor', 'middle')
+    .text('Q3');
 }
 
 export default { init, resize, run };

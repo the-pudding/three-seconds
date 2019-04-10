@@ -1,16 +1,12 @@
 #average
-	figure
-		top 50%
-		left 0
 	.g-axis
 		line
-			stroke-dasharray 8px 8px
 			stroke-opacity 0.33
-			stroke-width 2px
 			stroke $bg-invert
 		path
 			display none
-		
+		text
+			opacity 0
 	.foul
 		circle
 			stroke $fg
@@ -28,3 +24,7 @@
 			text
 				fill $fg
 				fill-opacity 1
+			
+	.quarter
+		fill $bg-invert
+		opacity 0.5

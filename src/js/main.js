@@ -1,4 +1,4 @@
-/* global d3 */
+/* global d3 WIDTH HEIGHT FONT_SIZE */
 import '@babel/polyfill';
 import './utils/render-d3-video';
 import loadData from './load-data';
@@ -14,10 +14,10 @@ import Outro from './section-outro';
 const $main = d3.select('main');
 
 async function runAll() {
-  await Intro.run();
+  // await Intro.run();
   // await Refresher.run();
   // await Average.run();
-  // await Time.run();
+  await Time.run();
   // await Report.run();
   // await Outro.run();
 }
@@ -29,12 +29,12 @@ function setupSlide() {
 window.renderStart = async function renderStart({ width, height }) {
   window.WIDTH = width;
   window.HEIGHT = height;
+  window.FONT_SIZE = Math.floor(width * 0.05);
 
-  const fontSize = Math.floor(width * 0.05);
   $main
     .style('width', `${width}px`)
     .style('height', `${height}px`)
-    .style('font-size', `${fontSize}px`);
+    .style('font-size', `${FONT_SIZE}px`);
 
   d3.selectAll('section').each(setupSlide);
 
