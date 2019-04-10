@@ -69,7 +69,7 @@ async function run() {
   await animateText({ sel: $p, visible: true });
   await pause(2);
   await revealFigure();
-  await pause(3);
+  await pause(4);
   await toggleLance({ visible: true, dur: 400 });
   await moveDots();
   await pause(0.5);

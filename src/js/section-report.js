@@ -14,12 +14,17 @@ const $flipbook = $section.select('#flipbook-report');
 
 function revealFigure() {
   return new Promise(resolve => {
+    $figure.style('opacity', 1);
+
     $figure
+      .selectAll('img')
       .transition()
-      .duration(500)
+      .delay(() => Math.random() * 2000)
+      .duration(100)
       .ease(d3.easeCubicOut)
-      .style('opacity', 1)
-      .on('end', resolve);
+      .style('opacity', 1);
+
+    d3.timeout(resolve, 2250);
   });
 }
 
@@ -36,17 +41,10 @@ function goToFlip() {
       .style('height', `${height}px`);
 
     $figure
-      .selectAll('img')
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('opacity', 0.1);
-
-    $flipbook
-      .transition()
-      .duration(500)
-      .ease(d3.easeCubicOut)
-      .style('transform', `scale(6)`)
+      .style('opacity', 0.1)
       .on('end', resolve);
 
     // .style('border-color', colors.fg);
@@ -72,9 +70,10 @@ async function run() {
   await pause(2);
   await goToFlip();
   await pause(2);
-  await scaleFlip(6);
+  scaleFlip(6);
   await flipbook.play('#flipbook-report');
   await scaleFlip(1);
+  await pause(0.5);
   await slide({ sel: $section, state: 'exit' });
   return true;
 }

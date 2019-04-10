@@ -1,4 +1,4 @@
-/* global d3 WIDTH HEIGHT */
+/* global d3 WIDTH HEIGHT FONT_SIZE */
 import slide from './slide';
 import animateText from './animate-text';
 import pause from './pause';
@@ -114,7 +114,7 @@ async function run() {
   await quarter(3);
   await pause(1);
   await quarter(4);
-  await pause(2);
+  await pause(1);
   await slide({ sel: $section, state: 'exit' });
   return true;
 }

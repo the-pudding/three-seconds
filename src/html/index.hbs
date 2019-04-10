@@ -21,7 +21,7 @@
 <body>
 
 	<main id='content'>
-
+		{{> base/header }}
 		{{#each doc.section }}
 		<section id='{{id}}'>
 
@@ -47,6 +47,7 @@
 			{{/ifEquals }}
 
 			<p>{{{text}}}</p>
+			<cite>{{{narration}}}</cite>
 		</section>
 		{{/each}}
 

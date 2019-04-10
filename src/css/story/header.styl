@@ -4,19 +4,47 @@ header
 	top 0
 	left 0
 	width 100%
-	background-color $white
+	background-color transparent
 	font-family $sans
-
+	display none
 	a.logo
 		display block
 		border none
-		max-width 9rem
-		margin 1rem auto
-
+		max-width 25%
+		margin 0 auto
+		transform translateY(125%)
+		
 		svg
-			fill $off-black
+			fill $bg-invert
 			display block
 			width 100%
+			opacity 0
+
+	.stripe-1
+		position absolute
+		top 0
+		left 0
+		width 100%
+		height 33.3%
+		background-color $primary
+		z-index -1
+	.stripe-2
+		position absolute
+		top 33.3%
+		left 0
+		width 100%
+		height 33.3%
+		background-color $white
+		z-index -1
+	.stripe-3
+		position absolute
+		top 66.6%
+		left 0
+		width 100%
+		height 33.3%
+		background-color $secondary
+		z-index -1
+
 	
 header.is-sticky
 	position fixed
@@ -153,5 +181,6 @@ header.is-sticky.is-dark
 		&.is-visible span
 			svg
 				stroke $off-black
+
 
 

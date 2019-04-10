@@ -14,12 +14,12 @@ import Outro from './section-outro';
 const $main = d3.select('main');
 
 async function runAll() {
-  // await Intro.run();
-  // await Refresher.run();
-  // await Average.run();
-  // await Time.run();
+  await Intro.run();
+  await Refresher.run();
+  await Average.run();
+  await Time.run();
   await Report.run();
-  // await Outro.run();
+  await Outro.run();
 }
 
 function setupSlide() {
