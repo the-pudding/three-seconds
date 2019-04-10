@@ -79,12 +79,6 @@ async function run() {
   return true;
 }
 
-function resizeFigure() {
-  const figureH = $figure.node().offsetHeight;
-  const y = -figureH / 2;
-  $figure.style('transform', `translate(0, ${y}px)`);
-}
-
 function resize() {
   const margin = Math.floor(WIDTH * 0.05);
   const fontSize = Math.floor(FONT_SIZE * 0.67);
