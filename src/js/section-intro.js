@@ -4,7 +4,6 @@ import animateText from './animate-text';
 import pause from './pause';
 import video from './flipbook';
 import loadImage from './utils/load-image';
-import flipbook from './flipbook';
 
 const $section = d3.select('#intro');
 // const $title = $section.select('h1');
@@ -30,9 +29,6 @@ async function run() {
   await pause(2);
   await animateText({ sel: $p, visible: true });
   await pause(4);
-
-  // await flipbook.play('#flipbook-1');
-  // await animateText({ sel: $p, visible: false });
   toggleLebron({ visible: false, dur: 500 });
   await slide({ sel: $section, state: 'exit' });
   return true;
@@ -40,6 +36,8 @@ async function run() {
 
 function resize() {
   toggleLebron({ visible: false });
+  const stroke = Math.floor(WIDTH * 0.004);
+  $section.select('h1').style('-webkit-text-stroke-width', `${stroke}px`);
 }
 
 function init() {}

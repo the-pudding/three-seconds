@@ -17,8 +17,8 @@ async function runAll() {
   // await Intro.run();
   // await Refresher.run();
   // await Average.run();
-  await Time.run();
-  // await Report.run();
+  // await Time.run();
+  await Report.run();
   // await Outro.run();
 }
 

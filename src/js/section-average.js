@@ -75,7 +75,7 @@ async function run() {
   await pause(0.5);
   await toggleLance({ visible: false, dur: 400 });
   await pause(3);
-  // await slide({ sel: $section, state: 'exit' });
+  await slide({ sel: $section, state: 'exit' });
   return true;
 }
 

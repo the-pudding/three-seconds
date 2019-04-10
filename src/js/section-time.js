@@ -7,7 +7,8 @@ import colors from './colors';
 const FOUL = 'Defensive 3 Seconds';
 const MINUTES = d3.range(0, 48);
 const QUARTER_MINS = 12;
-const BIN = 1;
+const BIN = 3;
+const BAND_PAD = 0.25;
 
 const $section = d3.select('#time');
 const $p = $section.select('p');
@@ -21,22 +22,23 @@ let chartHeight = 0;
 let maxCount = 0;
 let totalCount = 0;
 let targetCount = 0;
+let strokeWidth = 0;
 
-const scaleX = d3.scaleBand().paddingInner(0);
+const scaleX = d3.scaleBand().paddingInner(BAND_PAD);
 
 const scaleY = d3.scaleLinear().clamp(true);
 
 function quarter(q) {
   return new Promise(resolve => {
+    const x = scaleX(QUARTER_MINS * (q - 1));
+    const y = chartHeight + strokeWidth * 2;
+
     $vis
       .select('.quarter')
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .attr(
-        'transform',
-        `translate(${scaleX(QUARTER_MINS * (q - 1))}, ${chartHeight})`
-      )
+      .attr('transform', `translate(${x}, ${y})`)
       .style('opacity', 1)
       .select('text')
       .text(`Q${q}`);
@@ -47,7 +49,7 @@ function quarter(q) {
       .duration(500)
       // .delay((d, i) => i * 10)
       .ease(d3.easeCubicInOut)
-      .style('fill', d => (d.quarter === q ? colors.fg : colors.bgInvert))
+      .style('fill', d => (d.quarter === q ? colors.primary : colors.bgInvert))
       .style('opacity', d => (d.quarter === q ? 1 : 0.5))
       .on('end', (d, i, n) => {
         if (i === n.length - 1) resolve();
@@ -117,15 +119,9 @@ async function run() {
   return true;
 }
 
-function resizeFigure() {
-  const figureH = $figure.node().offsetHeight;
-  const y = -figureH / 2;
-  $figure.style('transform', `translate(0, ${y}px)`);
-}
-
 function resize() {
   const margin = Math.floor(WIDTH * 0.04);
-  const strokeWidth = Math.floor(WIDTH * 0.005);
+  strokeWidth = Math.floor(WIDTH * 0.005);
 
   chartWidth = WIDTH - margin * 2;
   chartHeight = HEIGHT * 0.67 - margin * 4;
@@ -142,9 +138,12 @@ function resize() {
 
   $vis
     .select('.quarter')
-    .attr('transform', `translate(${-scaleX(QUARTER_MINS)}, ${chartHeight})`);
+    .attr(
+      'transform',
+      `translate(${-scaleX(QUARTER_MINS)}, ${chartHeight + strokeWidth * 2})`
+    );
 
-  const quarterW = scaleX.bandwidth() * (QUARTER_MINS / BIN);
+  const quarterW = scaleX.bandwidth() * (1 + BAND_PAD) * (QUARTER_MINS / BIN);
 
   $vis
     .select('.quarter rect')
@@ -165,8 +164,6 @@ function resize() {
     .attr('width', scaleX.bandwidth())
     .attr('height', scaleY(targetCount))
     .style('stroke-width', strokeWidth);
-
-  // resizeFigure();
 }
 
 function init({ data }) {
@@ -185,7 +182,7 @@ function init({ data }) {
 
   const nestedData = d3
     .nest()
-    .key(d => Math.floor((d.minute - 1) / BIN))
+    .key(d => Math.floor(d.minute / BIN))
     .rollup(values => {
       return {
         ...values[0],
