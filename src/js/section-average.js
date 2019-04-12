@@ -1,12 +1,14 @@
 /* global d3 WIDTH HEIGHT FONT_SIZE */
 import slide from './slide';
 import animateText from './animate-text';
+import typer from './typer';
 import pause from './pause';
 
 const FOUL = 'Defensive 3 Seconds';
 
 const $section = d3.select('#average');
-const $p = $section.select('p');
+const $intertitle = $section.select('.intertitle');
+const $p = $intertitle.select('p');
 const $figure = $section.select('figure');
 const $svg = $figure.select('svg');
 const $axis = $svg.select('.g-axis');
@@ -22,8 +24,8 @@ let chartHeight = 0;
 function toggleLance({ visible = false, dur = 0 }) {
   const figureH = $figure.node().offsetHeight;
   const imgH = $lance.node().offsetHeight;
-  const offsetH = 0.05 * WIDTH;
-  const top = offsetH + figureH - imgH;
+  const offsetH = 0.5 * HEIGHT;
+  const top = offsetH + figureH / 2 - imgH;
   const x = visible ? 0 : $lance.node().offsetWidth;
 
   return new Promise(resolve => {
@@ -57,7 +59,7 @@ function revealFigure() {
   return new Promise(resolve => {
     $figure
       .transition()
-      .duration(500)
+      .duration(0)
       .ease(d3.easeCubicOut)
       .style('opacity', 1)
       .on('end', resolve);
@@ -66,12 +68,23 @@ function revealFigure() {
 
 async function run() {
   await slide({ sel: $section, state: 'enter' });
-  await animateText({ sel: $p, visible: true });
-  await pause(2);
+  // await animateText({ sel: $p, visible: true });
+  await typer.reveal($p);
+  await pause(3.5);
   await revealFigure();
+  await slide({ sel: $intertitle, state: 'exit' });
+  await pause(0.25);
+
+  animateText({
+    sel: $figure.select('.observe--expectation'),
+    state: 'visible',
+  });
+
   await pause(4);
   await toggleLance({ visible: true, dur: 400 });
   await moveDots();
+  animateText({ sel: $figure.select('.observe--expectation'), state: 'exit' });
+  animateText({ sel: $figure.select('.observe--reality'), state: 'visible' });
   await pause(0.5);
   await toggleLance({ visible: false, dur: 400 });
   await pause(3);
@@ -122,7 +135,7 @@ function resize() {
 
   $axis.call(axisX);
 
-  $axis.selectAll('text').style('font-size', `${fontSizeAxis}px`);
+  // $axis.selectAll('text').style('font-size', `${fontSizeAxis}px`);
 
   $axis
     .selectAll('line')
@@ -131,14 +144,20 @@ function resize() {
 
   $svg
     .select('.quarter--2')
-    .attr('transform', `translate(${WIDTH * 0.275}, ${margin})`)
-    .style('font-size', FONT_SIZE);
+    .attr('transform', `translate(${WIDTH * 0.275}, ${margin})`);
+  // .style('font-size', FONT_SIZE);
   $svg
     .select('.quarter--3')
-    .attr('transform', `translate(${WIDTH * 0.725}, ${margin})`)
-    .style('font-size', FONT_SIZE);
+    .attr('transform', `translate(${WIDTH * 0.725}, ${margin})`);
+  // .style('font-size', FONT_SIZE);
 
   // resizeFigure();
+
+  // const textStrokeWidth = Math.floor(WIDTH * 0.002);
+  // $figure
+  //   .selectAll('.observe')
+  //   .style('-webkit-text-stroke-width', `${textStrokeWidth}px`);
+
   toggleLance({ visible: false });
 }
 
@@ -175,6 +194,19 @@ function init({ data }) {
     .attr('class', 'quarter quarter--3')
     .attr('text-anchor', 'middle')
     .text('Q3');
+
+  const $oE = $figure
+    .append('p')
+    .attr('class', 'observe observe--expectation')
+    .text('Expectation');
+
+  const $oR = $figure
+    .append('p')
+    .attr('class', 'observe observe--reality')
+    .text('Reality');
+
+  animateText({ sel: $oE, state: 'pre', dur: 0 });
+  animateText({ sel: $oR, state: 'pre', dur: 0 });
 }
 
 export default { init, resize, run };

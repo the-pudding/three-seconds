@@ -10,22 +10,32 @@ import Time from './section-time';
 import Average from './section-average';
 import Report from './section-report';
 import Outro from './section-outro';
+import typer from './typer';
 
 const $main = d3.select('main');
 
 async function runAll() {
-  console.time('run');
+  const start = d3.now();
   await Intro.run();
   await Refresher.run();
   await Average.run();
   await Time.run();
   await Report.run();
   await Outro.run();
-  console.timeEnd('run');
+  const end = d3.now();
+  const diff = end - start;
+  const frames = (diff / 1000) * 60;
+  console.log({ frames });
 }
 
 function setupSlide() {
-  slide({ sel: d3.select(this), state: 'pre', dur: 0 });
+  const sel = d3.select(this);
+  slide({ sel, state: 'pre', dur: 0 });
+  const stroke = Math.floor(WIDTH * 0.002);
+  const $intertitle = sel.select('.intertitle');
+  const $p = $intertitle.select('p');
+  $p.style('-webkit-text-stroke-width', `${stroke}px`);
+  typer.prepare($p);
 }
 
 window.renderStart = async function renderStart({ width, height }) {

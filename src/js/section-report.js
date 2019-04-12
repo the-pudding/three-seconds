@@ -3,10 +3,11 @@ import slide from './slide';
 import animateText from './animate-text';
 import pause from './pause';
 import flipbook from './flipbook';
-import colors from './colors';
+import typer from './typer';
 
 const $section = d3.select('#report');
-const $p = $section.select('p');
+const $intertitle = $section.select('.intertitle');
+const $p = $intertitle.select('p');
 const $figure = $section.select('figure');
 const $flipbook = $section.select('#flipbook-report');
 
@@ -64,8 +65,11 @@ function scaleFlip(scale) {
 
 async function run() {
   await slide({ sel: $section, state: 'enter' });
-  await animateText({ sel: $p, visible: true });
-  await pause(2);
+  // await animateText({ sel: $p, visible: true });
+  // await pause(2);
+  await typer.reveal($p);
+  await pause(4.5);
+  await slide({ sel: $intertitle, state: 'exit' });
   await revealFigure();
   await pause(2);
   await goToFlip();
@@ -79,9 +83,9 @@ async function run() {
 }
 
 function resize() {
-  const chartHeight = HEIGHT * 0.67;
+  // const chartHeight = HEIGHT * 0.67;
 
-  $figure.style('height', `${chartHeight}px`);
+  // $figure.style('height', `${chartHeight}px`);
 
   const borderWidth = Math.floor(WIDTH * 0.005);
 

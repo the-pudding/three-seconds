@@ -1,6 +1,6 @@
 /* CUSTOM STORY STYLE */
 body
-	background-color $bg-invert
+	background-color $white
 	font-family $sans-display
 
 	
@@ -16,34 +16,13 @@ section
 	width 100%
 	height 100%
 	overflow hidden
-
-	h1, p
-		margin 0
-		padding 0 5%
-		width 100%
-		line-height 1
-		position absolute
-		top 0
-		left 0
-		text-align center
-		opacity 0
-
-	h1
-		font-weight 900
-	p
-		font-weight 700
-		line-height 1.25
-		top auto
-		bottom 2.5%
-		max-width 90%
-		padding 2.5%
-		left 5%
 		
 figure
 	position absolute
-	top 5%
+	top 50%
 	left 0
 	opacity 0
+	transform translateY(-50%)
 
 svg
 	display block
@@ -57,16 +36,47 @@ svg text
 	fill $bg-invert
 
 em
-	color $secondary
-	background-color $tertiary
-	padding 0 0.25em
+	color $white
+	// padding 0 0.25em
 	// -webkit-text-stroke-color $fg
 	// -webkit-text-stroke-width 1px
 	// letter-spacing 0.01em
 
 cite
-	font-size 0.4em
-	line-height 1.2
 	display block
+	position absolute
+	width 100%
+	bottom 2.5%
+	left 0
+	line-height 1.2
 	margin 0
-	padding 1em
+	padding 0 5%
+	font-weight 700
+	color $fg
+	opacity 1
+	font-size 0.5em
+
+.intertitle
+	position absolute
+	top 0
+	left 0
+	width 100%
+	height 100%
+	background-color $primary
+	p	
+		color $bg
+		font-weight 900
+		font-size 2em
+		line-height 1
+		letter-spacing 0.01em
+		position absolute
+		width 100%
+		top 50%
+		transform translateY(-50%)
+		padding 0 5%
+		// text-align center
+		-webkit-text-stroke-color $fg
+
+	span
+		opacity 0
+		display inline-block

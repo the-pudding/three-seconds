@@ -2,6 +2,7 @@
 import slide from './slide';
 import animateText from './animate-text';
 import pause from './pause';
+import typer from './typer';
 import colors from './colors';
 
 const FOUL = 'Defensive 3 Seconds';
@@ -11,7 +12,8 @@ const BIN = 3;
 const BAND_PAD = 0.25;
 
 const $section = d3.select('#time');
-const $p = $section.select('p');
+const $intertitle = $section.select('.intertitle');
+const $p = $intertitle.select('p');
 const $figure = $section.select('figure');
 const $svg = $figure.select('svg');
 const $axis = $svg.select('.g-axis');
@@ -101,20 +103,24 @@ function revealFigure() {
 
 async function run() {
   await slide({ sel: $section, state: 'enter' });
-  await animateText({ sel: $p, visible: true });
-  await pause(2);
-  revealFigure();
-  await pause(1);
+  // await animateText({ sel: $p, visible: true });
+  await typer.reveal($p);
+  await pause(3.5);
+  await revealFigure();
+  await slide({ sel: $intertitle, state: 'exit' });
+  // await pause(2);
+  // revealFigure();
+  // await pause(1);
   await moveBars();
-  await pause(1);
+  // await pause(1);
   await quarter(1);
-  await pause(1);
+  await pause(0.5);
   await quarter(2);
-  await pause(1);
+  await pause(0.5);
   await quarter(3);
-  await pause(1);
+  await pause(0.5);
   await quarter(4);
-  await pause(1);
+  await pause(2.5);
   await slide({ sel: $section, state: 'exit' });
   return true;
 }
@@ -124,7 +130,7 @@ function resize() {
   strokeWidth = Math.floor(WIDTH * 0.005);
 
   chartWidth = WIDTH - margin * 2;
-  chartHeight = HEIGHT * 0.67 - margin * 4;
+  chartHeight = HEIGHT * 0.67 - margin * 6;
 
   scaleX.rangeRound([0, chartWidth]);
 
@@ -132,7 +138,7 @@ function resize() {
 
   $figure
     .style('width', `${chartWidth + margin * 2}px`)
-    .style('height', `${chartHeight + margin * 4}px`);
+    .style('height', `${chartHeight + margin * 6}px`);
 
   $vis.attr('transform', `translate(${margin}, ${margin * 2})`);
 
@@ -167,7 +173,7 @@ function resize() {
 }
 
 function init({ data }) {
-  const data3 = data.filter(d => d.foul === FOUL).filter(d => d.minute <= 48);
+  const data3 = data.filter(d => d.minute <= 48);
 
   const minuteData = MINUTES.map(d => {
     const match = data3.find(v => v.minute === d);

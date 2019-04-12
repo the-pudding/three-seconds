@@ -1,43 +1,43 @@
 "foul","average","use"
-"Away From Play",27.3726708074534,
+"Away From Play",27.4520123839009,
 "Basket From Below",35.5,
-"Clear Path",26.8928571428571,
-"Defensive 3 Seconds",19.1894664842681,true
-"Defensive Goaltending",25.0392038600724,true
-"Delay Of Game",24.0239071038251,true
+"Clear Path",27.0473372781065,
+"Defensive 3 Seconds",19.2315573770492,true
+"Defensive Goaltending",25.1960431654676,true
+"Delay Of Game",24.1157249829816,true
 "Delay Technical",32.35,
-"Discontinue Dribble",24.3038461538462,
+"Discontinue Dribble",24.4061302681992,
 "Double Lane",28.2380952380952,
 "Double Personal",30.9137931034483,
 "Double Technical ",31.2697368421053,
-"Eight Second Violation",37.3571428571429,
-"Excess Timeout Technical",45.2,
-"Five Second Violation",30.2795698924731,
-"Flagrant 1 ",30.1172638436482,
-"Flagrant 2 ",36.4285714285714,
-"Foul",25.6856530028599
+"Eight Second Violation",37.7209302325581,
+"Excess Timeout Technical",46.5,
+"Five Second Violation",30.7578947368421,
+"Flagrant 1 ",30.2718446601942,
+"Flagrant 2 ",37.2702702702703,
+"Foul",25.865798816568,
 "Hanging Technical",24.125,
 "Illegal Assist",27.0625,
 "Illegal Screen",19.6666666666667,
 "Inbound Foul",27.8661417322835,
-"Jump Ball Violation",20.3461538461538,
-"Kicked Ball",23.4390789894468,true
-"Lane Violation",25.8964285714286,
-"Loose Ball",26.5088691796009,true
-"Offensive",25.4573801188635
-"Offensive 3 Seconds",23.3113708820404,true
-"Offensive Charge",25.463300125959,true
-"Offensive Goaltending",24.6993006993007,
-"Palming Turnover",24.9822222222222,
-"Personal",26.256032065711,true
-"Personal Block",25.8449559918754,true
-"Personal Take",37.9803921568627,
+"Jump Ball Violation",20.9245283018868,
+"Kicked Ball",23.562101910828,true
+"Lane Violation",26.208480565371,
+"Loose Ball",26.7332673920211,true
+"Offensive",25.6022184438507,
+"Offensive 3 Seconds",23.396186440678,true
+"Offensive Charge",25.622809014341,true
+"Offensive Goaltending",24.9491916859122,
+"Palming Turnover",25.0973451327434,
+"Personal",26.4866219099254,true
+"Personal Block",26.0201748486886,true
+"Personal Take",38.7297835282409,
 "Punched Ball",24.25,
-"Shooting",25.6649661574719,true
-"Shooting Block",25.8606027987083,true
+"Shooting",25.8400211268611,true
+"Shooting Block",26.0518162393162,true
 "Swinging Elbows",25,
 "Taunting Technical",28.125,
-"Technical",28.4022480931353,true
+"Technical",28.5193767479025,true
 "Too Many Players Technical",26.8333333333333,
-"Traveling",24.1399371069182,true
+"Traveling",24.2682316118936,true
 "Unsportsmanlike Technical",32.2857142857143,
