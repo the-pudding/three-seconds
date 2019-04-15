@@ -17,6 +17,7 @@ async function preload(el) {
   }
 
   $f.append('img').attr('src', `${src}/${start}.png`);
+  $f.append('div').attr('class', 'flipbook__overlay');
   return Promise.resolve();
 }
 

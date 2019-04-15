@@ -9,7 +9,7 @@ const $section = d3.select('#report');
 const $intertitle = $section.select('.intertitle');
 const $p = $intertitle.select('p');
 const $figure = $section.select('figure');
-const $flipbook = $section.select('#flipbook-report');
+const $flipbook = $section.select('#flipbook-l2m');
 
 // let borderWidth = 0;
 
@@ -75,7 +75,7 @@ async function run() {
   await goToFlip();
   await pause(2);
   scaleFlip(6);
-  await flipbook.play('#flipbook-report');
+  await flipbook.play('#flipbook-l2m');
   await scaleFlip(1);
   await pause(0.5);
   await slide({ sel: $section, state: 'exit' });

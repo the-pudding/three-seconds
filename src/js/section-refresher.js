@@ -14,6 +14,7 @@ async function run() {
   await typer.reveal($p);
   await pause(3.5);
   await slide({ sel: $intertitle, state: 'exit' });
+  await pause(8);
   await slide({ sel: $section, state: 'exit' });
   return true;
 }

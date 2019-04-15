@@ -27,6 +27,7 @@
 
 			{{#ifEquals id 'intro' }}
 			<h1>{{{title}}}</h1>
+			<h2 class='byline'>{{{text}}}</h2>
 			{{/ifEquals }}
 
 			{{#ifEquals chart 'svg' }}
@@ -43,7 +44,8 @@
 			<figure>
 
 			</figure>
-			<div id='flipbook-report' class='flipbook' data-src='assets/videos/l2m' data-frames='159' data-rate='29.97'></div>
+			<div id='flipbook-{{video}}' class='flipbook' data-src='assets/videos/{{video}}' data-frames='{{frames}}'
+				data-rate='29.97'></div>
 			{{/ifEquals }}
 
 			<div class='intertitle'>
