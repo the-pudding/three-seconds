@@ -38,7 +38,7 @@ function setupSlide() {
   typer.prepare($p);
 }
 
-window.renderStart = async function renderStart({ width, height }) {
+window.renderD3Video = async function renderD3Video({ width, height }) {
   window.WIDTH = width;
   window.HEIGHT = height;
   window.FONT_SIZE = Math.floor(width * 0.05);
@@ -66,7 +66,7 @@ window.renderStart = async function renderStart({ width, height }) {
 function devStart() {
   if (window.currentTime === undefined) {
     window.DEV = true;
-    window.renderStart({ width: 1080, height: 1920 });
+    window.renderD3Video({ width: 1080, height: 1920 });
   }
 }
 
