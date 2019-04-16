@@ -18,6 +18,7 @@ const $figure = $section.select('figure');
 const $svg = $figure.select('svg');
 const $axis = $svg.select('.g-axis');
 const $vis = $svg.select('.g-vis');
+const $harden = d3.select('#harden');
 
 let chartWidth = 0;
 let chartHeight = 0;
@@ -29,6 +30,32 @@ let strokeWidth = 0;
 const scaleX = d3.scaleBand().paddingInner(BAND_PAD);
 
 const scaleY = d3.scaleLinear().clamp(true);
+
+function toggleHarden(state) {
+  const bottom = 0.385 * HEIGHT;
+  if (state === 'enter')
+    $harden
+      .transition()
+      .duration(500)
+      .ease(d3.easeCubicOut)
+      .style('opacity', 1);
+  else if (state === 'drop') {
+    $harden
+      .transition()
+      // .delay(3 * 100)
+      .duration(1000)
+      .ease(d3.easeCubicInOut)
+      .style('bottom', `${bottom}px`);
+  } else if (state === 'exit') {
+    $harden
+      .transition()
+      .duration(500)
+      .ease(d3.easeCubicIn)
+      .style('bottom', `${HEIGHT}px`);
+  }
+
+  return Promise.resolve();
+}
 
 function quarter(q) {
   return new Promise(resolve => {
@@ -59,28 +86,13 @@ function quarter(q) {
   });
 }
 
-function toggleFigure({ visible = false, dur = 0 }) {
-  const figureW = $figure.node().offsetWidth;
-  const figureH = $figure.node().offsetHeight;
-  const x = visible ? 0 : -figureW;
-  const y = -figureH / 2;
-  return new Promise(resolve => {
-    $figure
-      .transition()
-      .duration(dur)
-      .ease(d3.easeCubicInOut)
-      .style('transform', `translate(${x}px, ${y}px)`)
-      .on('end', resolve);
-  });
-}
-
 function moveBars() {
   return new Promise(resolve => {
     $vis
       .selectAll('.minute')
       .transition()
       .duration(1000)
-      .delay((d, i) => i * 10)
+      // .delay((d, i) => Math.floor(i / BIN) * 100)
       .ease(d3.easeCubicInOut)
       .attr('y', d => chartHeight - scaleY(d.count))
       .attr('height', d => scaleY(d.count))
@@ -108,9 +120,11 @@ async function run() {
   await pause(3.5);
   await revealFigure();
   await slide({ sel: $intertitle, state: 'exit' });
-  // await pause(2);
+  await toggleHarden('enter');
+  await pause(1);
   // revealFigure();
   // await pause(1);
+  await toggleHarden('drop');
   await moveBars();
   // await pause(1);
   await quarter(1);
@@ -121,6 +135,7 @@ async function run() {
   await pause(0.5);
   await quarter(4);
   await pause(2.5);
+  await toggleHarden('exit');
   await slide({ sel: $section, state: 'exit' });
   return true;
 }

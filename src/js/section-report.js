@@ -21,7 +21,7 @@ function revealFigure() {
       .selectAll('img')
       .transition()
       .delay(() => Math.random() * 2000)
-      .duration(100)
+      .duration(250)
       .ease(d3.easeCubicOut)
       .style('opacity', 1);
 
@@ -73,7 +73,7 @@ async function run() {
   await revealFigure();
   await pause(2);
   await goToFlip();
-  await pause(2);
+  await pause(1);
   scaleFlip(6);
   await flipbook.play('#flipbook-l2m');
   await scaleFlip(1);

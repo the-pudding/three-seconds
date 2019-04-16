@@ -41,17 +41,23 @@ function toggleLance({ visible = false, dur = 0 }) {
 
 function moveDots() {
   return new Promise(resolve => {
+    let done = false;
     $vis
       .selectAll('g')
       .transition()
       .duration(1000)
-      .delay(500)
+      .delay(d => (d.foul === FOUL ? 2000 : 500))
       .ease(d3.easeCubicInOut)
       .attr(
         'transform',
         (d, i) => `translate(${scaleX(d.average)}, ${scaleY(i + 1)})`
       )
-      .on('end', resolve);
+      .on('end', d => {
+        if (d.foul !== FOUL) {
+          done = true;
+          resolve();
+        }
+      });
   });
 }
 
@@ -81,12 +87,12 @@ async function run() {
   });
 
   await pause(4);
-  await toggleLance({ visible: true, dur: 400 });
   await moveDots();
+  await toggleLance({ visible: true, dur: 500 });
   animateText({ sel: $figure.select('.observe--expectation'), state: 'exit' });
   animateText({ sel: $figure.select('.observe--reality'), state: 'visible' });
-  await pause(0.5);
-  await toggleLance({ visible: false, dur: 400 });
+  await pause(1);
+  await toggleLance({ visible: false, dur: 500 });
   await pause(3);
   await slide({ sel: $section, state: 'exit' });
   return true;
@@ -95,7 +101,6 @@ async function run() {
 function resize() {
   const margin = Math.floor(WIDTH * 0.05);
   const fontSize = Math.floor(FONT_SIZE * 0.67);
-  const fontSizeAxis = Math.floor(FONT_SIZE * 0.25);
   const radius = Math.floor(fontSize * 0.5);
   const strokeWidth = Math.floor(WIDTH * 0.005);
   const axisStrokeWidth = strokeWidth * 0.5;
@@ -135,8 +140,6 @@ function resize() {
 
   $axis.call(axisX);
 
-  // $axis.selectAll('text').style('font-size', `${fontSizeAxis}px`);
-
   $axis
     .selectAll('line')
     .style('stroke-width', `${axisStrokeWidth}px`)
@@ -145,18 +148,10 @@ function resize() {
   $svg
     .select('.quarter--2')
     .attr('transform', `translate(${WIDTH * 0.275}, ${margin})`);
-  // .style('font-size', FONT_SIZE);
+
   $svg
     .select('.quarter--3')
     .attr('transform', `translate(${WIDTH * 0.725}, ${margin})`);
-  // .style('font-size', FONT_SIZE);
-
-  // resizeFigure();
-
-  // const textStrokeWidth = Math.floor(WIDTH * 0.002);
-  // $figure
-  //   .selectAll('.observe')
-  //   .style('-webkit-text-stroke-width', `${textStrokeWidth}px`);
 
   toggleLance({ visible: false });
 }

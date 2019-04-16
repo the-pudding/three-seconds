@@ -13,17 +13,37 @@ const $flipbook = $section.select('#flipbook-point');
 let $tick = null;
 let timeStart = null;
 let timer = null;
+let done2X = false;
+let done3X = false;
 
 function tick() {
   const cur = d3.now();
   const diff = (cur - timeStart) / 1000;
   const t = diff.toFixed(1);
   $tick.html(`${t.includes('10') ? '???' : t} <span>🤔</span>`);
+  if (diff > 2.5 && !done2X) {
+    $flipbook
+      .selectAll('img')
+      .transition()
+      .ease(d3.easeCubicOut)
+      .duration(500)
+      .style('transform', `translate(${WIDTH * 0.125}px,0) scale(1.5)`);
+    done2X = true;
+  }
+  if (diff > 6.5 && !done3X) {
+    $flipbook
+      .selectAll('img')
+      .transition()
+      .ease(d3.easeCubicOut)
+      .duration(500)
+      .style('transform', `translate(${WIDTH * 0.25}px,0) scale(2)`);
+    done3X = true;
+  }
 }
 
 function tickStart() {
   timeStart = d3.now();
-  const h = $flipbook.select('img').node().offsetHeight;
+  const h = $flipbook.node().offsetWidth;
   const y = HEIGHT * 0.55 + h / 2;
   $tick.style('top', `${y}px`);
   animateText({ sel: $tick, state: 'visible' });
@@ -37,9 +57,9 @@ function tickStop() {
 
 async function run() {
   await slide({ sel: $section, state: 'enter' });
-  await typer.reveal($p);
-  await pause(4);
-  await slide({ sel: $intertitle, state: 'exit' });
+  // await typer.reveal($p);
+  // await pause(4);
+  await slide({ sel: $intertitle, state: 'exit', dur: 0 });
   await tickStart();
   await flipbook.play('#flipbook-point');
   await tickStop();
