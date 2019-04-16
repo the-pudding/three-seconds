@@ -76,7 +76,7 @@ async function run() {
   await slide({ sel: $section, state: 'enter' });
   // await animateText({ sel: $p, visible: true });
   await typer.reveal($p);
-  await pause(3.5);
+  await pause(4);
   await revealFigure();
   await slide({ sel: $intertitle, state: 'exit' });
   await pause(0.25);
@@ -93,7 +93,7 @@ async function run() {
   animateText({ sel: $figure.select('.observe--reality'), state: 'visible' });
   await pause(1);
   await toggleLance({ visible: false, dur: 500 });
-  await pause(3);
+  await pause(4);
   await slide({ sel: $section, state: 'exit' });
   return true;
 }

@@ -15,12 +15,12 @@ let timeStart = null;
 let timer = null;
 let done2X = false;
 let done3X = false;
-
+let done4X = false;
 function tick() {
   const cur = d3.now();
   const diff = (cur - timeStart) / 1000;
   const t = diff.toFixed(1);
-  $tick.html(`${t.includes('10') ? '???' : t} <span>🤔</span>`);
+  $tick.html(`${diff > 10 || t.includes('10') ? '???' : t} <span>🤔</span>`);
   if (diff > 2.5 && !done2X) {
     $flipbook
       .selectAll('img')
@@ -38,6 +38,14 @@ function tick() {
       .duration(500)
       .style('transform', `translate(${WIDTH * 0.25}px,0) scale(2)`);
     done3X = true;
+  } else if (diff > 10.5 && !done4X) {
+    $flipbook
+      .selectAll('img')
+      .transition()
+      .ease(d3.easeCubicOut)
+      .duration(100)
+      .style('transform', `translate(0,0) scale(1)`);
+    done4X = true;
   }
 }
 
@@ -61,7 +69,7 @@ async function run() {
   // await pause(4);
   await slide({ sel: $intertitle, state: 'exit', dur: 0 });
   await tickStart();
-  await flipbook.play('#flipbook-point');
+  await flipbook.play({ id: '#flipbook-point' });
   await tickStop();
   await slide({ sel: $section, state: 'exit' });
 }

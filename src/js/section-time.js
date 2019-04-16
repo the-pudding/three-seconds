@@ -38,7 +38,7 @@ function toggleHarden(state) {
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('opacity', 1);
+      .style('bottom', `${HEIGHT * 0.5}px`);
   else if (state === 'drop') {
     $harden
       .transition()
@@ -51,7 +51,7 @@ function toggleHarden(state) {
       .transition()
       .duration(500)
       .ease(d3.easeCubicIn)
-      .style('bottom', `${HEIGHT}px`);
+      .style('right', `${WIDTH * 1.045}px`);
   }
 
   return Promise.resolve();
@@ -77,7 +77,7 @@ function quarter(q) {
       .transition()
       .duration(500)
       // .delay((d, i) => i * 10)
-      .ease(d3.easeCubicInOut)
+      .ease(d3.easeCubicOut)
       .style('fill', d => (d.quarter === q ? colors.primary : colors.bgInvert))
       .style('opacity', d => (d.quarter === q ? 1 : 0.5))
       .on('end', (d, i, n) => {
@@ -120,10 +120,10 @@ async function run() {
   await pause(3.5);
   await revealFigure();
   await slide({ sel: $intertitle, state: 'exit' });
-  await toggleHarden('enter');
   await pause(1);
+  await toggleHarden('enter');
   // revealFigure();
-  // await pause(1);
+  await pause(0.48);
   await toggleHarden('drop');
   await moveBars();
   // await pause(1);

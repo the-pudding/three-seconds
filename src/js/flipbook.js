@@ -29,23 +29,23 @@ async function init() {
   return Promise.resolve();
 }
 
-function play(id) {
+function play({ id, early }) {
   return new Promise(resolve => {
     const $f = d3.select(id);
     const $img = $f.select('img');
     const src = $f.attr('data-src');
     const frames = +$f.attr('data-frames');
     const rate = +$f.attr('data-rate');
+
+    const end = early ? early * frames : frames;
     const timer = d3.timer(elapsed => {
       const frame = Math.max(
         1,
         Math.min(frames, Math.round((elapsed / 1000) * rate))
       );
       $img.attr('src', `${src}/${frame}.png`);
-      if (frame >= frames) {
-        timer.stop();
-        resolve();
-      }
+      if (frame >= frames) timer.stop();
+      if (frame >= end) resolve();
     });
   });
 }

@@ -10,8 +10,12 @@ const $intertitle = $section.select('.intertitle');
 const $p = $intertitle.select('p');
 const $figure = $section.select('figure');
 const $flipbook = $section.select('#flipbook-l2m');
+const $flipbook2 = $section.select('#flipbook-spike');
 
-// let borderWidth = 0;
+let timeStart = 0;
+let timer = null;
+let done1 = false;
+let done2 = false;
 
 function revealFigure() {
   return new Promise(resolve => {
@@ -20,12 +24,12 @@ function revealFigure() {
     $figure
       .selectAll('img')
       .transition()
-      .delay(() => Math.random() * 2000)
+      .delay(() => Math.random() * 1000)
       .duration(250)
       .ease(d3.easeCubicOut)
       .style('opacity', 1);
 
-    d3.timeout(resolve, 2250);
+    d3.timeout(resolve, 1500);
   });
 }
 
@@ -63,34 +67,64 @@ function scaleFlip(scale) {
   });
 }
 
+function tick() {
+  const cur = d3.now();
+  const diff = (cur - timeStart) / 1000;
+  if (diff > 1.5 && !done1) {
+    $flipbook
+      .selectAll('img')
+      .transition()
+      .ease(d3.easeCubicOut)
+      .duration(500)
+      .style('transform', `scale(2)`);
+    done1 = true;
+  }
+  if (diff > 5.3 && !done2) {
+    $flipbook
+      .selectAll('img')
+      .transition()
+      .ease(d3.easeCubicOut)
+      .duration(100)
+      .style('transform', `scale(1)`);
+    done2 = true;
+  }
+}
+
+function tickStart() {
+  timeStart = d3.now();
+  timer = d3.timer(tick);
+  return Promise.resolve();
+}
+
+function tickStop() {
+  timer.stop();
+}
+
 async function run() {
   await slide({ sel: $section, state: 'enter' });
   // await animateText({ sel: $p, visible: true });
   // await pause(2);
   await typer.reveal($p);
-  await pause(4.5);
+  await pause(5);
   await slide({ sel: $intertitle, state: 'exit' });
   await revealFigure();
-  await pause(2);
+  await pause(1);
   await goToFlip();
   await pause(1);
   scaleFlip(6);
-  await flipbook.play('#flipbook-l2m');
+  await tickStart();
+  await flipbook.play({ id: '#flipbook-l2m', early: 0.95 });
+  await tickStop();
   await scaleFlip(1);
-  await pause(0.5);
+  // await pause(0.5);
   await slide({ sel: $section, state: 'exit' });
   return true;
 }
 
 function resize() {
-  // const chartHeight = HEIGHT * 0.67;
-
-  // $figure.style('height', `${chartHeight}px`);
-
-  const borderWidth = Math.floor(WIDTH * 0.005);
-
-  $figure.selectAll('img').style('border-width', `${borderWidth}px`);
-  $flipbook.style('border-width', `${borderWidth}px`);
+  // const borderWidth = Math.floor(WIDTH * 0.005);
+  // $figure.selectAll('img').style('border-width', `${borderWidth}px`);
+  // $flipbook.style('border-width', `${borderWidth}px`);
 }
 
 function init() {

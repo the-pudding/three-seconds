@@ -5,23 +5,25 @@
 		align-items flex-start
 		align-content flex-start
 		justify-content flex-start
-		padding 0 2.5%
+		padding-left 8%
 		img
-			width 14.25%
+			width 12%
 			height auto
 			display block
-			border-style solid
-			border-color $bg
+			margin 0.08em 0.1em 
 			opacity 0
 
 	.flipbook
 		position absolute
 		overflow hidden
-		border-style solid
-		border-color $bg
 		visibility hidden
 		transform-origin 50% 50%
 		&.is-visible
 			visibility visible
 		img
 			width 100%
+		
+	#flipbook-l2m
+		img
+			transform-origin 50% 100%
+			transform scale(1.01)
