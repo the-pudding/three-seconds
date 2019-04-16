@@ -38,12 +38,12 @@ function tick() {
       .duration(500)
       .style('transform', `translate(${WIDTH * 0.25}px,0) scale(2)`);
     done3X = true;
-  } else if (diff > 10.5 && !done4X) {
+  } else if (diff > 9.25 && !done4X) {
     $flipbook
       .selectAll('img')
       .transition()
-      .ease(d3.easeCubicOut)
-      .duration(100)
+      .ease(d3.easeCubicIn)
+      .duration(1000)
       .style('transform', `translate(0,0) scale(1)`);
     done4X = true;
   }
@@ -52,7 +52,7 @@ function tick() {
 function tickStart() {
   timeStart = d3.now();
   const h = $flipbook.node().offsetWidth;
-  const y = HEIGHT * 0.55 + h / 2;
+  const y = HEIGHT * 0.525 + h / 2;
   $tick.style('top', `${y}px`);
   animateText({ sel: $tick, state: 'visible' });
   timer = d3.timer(tick);

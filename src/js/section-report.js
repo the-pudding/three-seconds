@@ -10,7 +10,6 @@ const $intertitle = $section.select('.intertitle');
 const $p = $intertitle.select('p');
 const $figure = $section.select('figure');
 const $flipbook = $section.select('#flipbook-l2m');
-const $flipbook2 = $section.select('#flipbook-spike');
 
 let timeStart = 0;
 let timer = null;
@@ -111,7 +110,7 @@ async function run() {
   await pause(1);
   await goToFlip();
   await pause(1);
-  scaleFlip(6);
+  scaleFlip(7.49);
   await tickStart();
   await flipbook.play({ id: '#flipbook-l2m', early: 0.95 });
   await tickStop();

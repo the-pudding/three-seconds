@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1080 760" enable-background="new 0 0 1080 760" xml:space="preserve">
+<g id="court">
+	<path id="key_1_" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M674.2,607.6
+		c-113.8,69.7-392.4,100.3-549.4,52.9c-130.1-39.3-73-107.1,71.8-146.8"/>
+	<path id="paint_1_" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M571.1,410.9l361,38.6L674.6,607.4
+		l-477.5-93.8L571.1,410.9z"/>
+</g>
+<g id="basket">
+	<path id="backboard_1_" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M685.6,138.3l-42.5,0.3V31.3
+		l177.4-7.2v113l-85.4,0.7"/>
+	<path id="square_1_" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M697.5,112.9V73.7l61.5-3v48
+		l-21.9,0.2"/>
+	<path id="topNet_1_" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M737.5,115c0,0.8-6.2,1.6-15.3,1.9
+		c-3.6,0.1-7.6,0.2-11.9,0.2c-15,0-27.2-1-27.2-2.1c0-1,8-1.8,19.1-2c2.6-0.1,5.3-0.1,8.1-0.1C725.4,112.9,737.5,113.8,737.5,115z"
+		/>
+	<path id="bottomNet_1_" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M737.5,115l-6.4,61.5h-41.5
+		l-6.4-61.5"/>
+</g>
+</svg>
