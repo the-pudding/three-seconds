@@ -29,7 +29,7 @@ async function init() {
   return Promise.resolve();
 }
 
-function play({ id, early }) {
+function play({ id, early, loops = 1 }) {
   return new Promise(resolve => {
     const $f = d3.select(id);
     const $img = $f.select('img');
@@ -37,15 +37,25 @@ function play({ id, early }) {
     const frames = +$f.attr('data-frames');
     const rate = +$f.attr('data-rate');
 
+    let counter = 1;
+    let baseElapsed = 0;
     const end = early ? early * frames : frames;
     const timer = d3.timer(elapsed => {
       const frame = Math.max(
         1,
-        Math.min(frames, Math.round((elapsed / 1000) * rate))
+        Math.min(frames, Math.round(((elapsed - baseElapsed) / 1000) * rate))
       );
       $img.attr('src', `${src}/${frame}.png`);
-      if (frame >= frames) timer.stop();
-      if (frame >= end) resolve();
+      // loop
+      if (counter < loops) {
+        if (frame >= frames) {
+          counter += 1;
+          baseElapsed = elapsed;
+        }
+      } else {
+        if (frame >= frames) timer.stop();
+        if (frame >= end) resolve();
+      }
     });
   });
 }

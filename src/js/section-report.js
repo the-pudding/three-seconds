@@ -10,11 +10,12 @@ const $intertitle = $section.select('.intertitle');
 const $p = $intertitle.select('p');
 const $figure = $section.select('figure');
 const $flipbook = $section.select('#flipbook-l2m');
+const $flipbook2 = $section.select('#flipbook-spike');
 
 let timeStart = 0;
 let timer = null;
 let done1 = false;
-let done2 = false;
+const done2 = false;
 
 function revealFigure() {
   return new Promise(resolve => {
@@ -50,8 +51,6 @@ function goToFlip() {
       .ease(d3.easeCubicOut)
       .style('opacity', 0.1)
       .on('end', resolve);
-
-    // .style('border-color', colors.fg);
   });
 }
 
@@ -78,15 +77,6 @@ function tick() {
       .style('transform', `scale(2)`);
     done1 = true;
   }
-  if (diff > 5.3 && !done2) {
-    $flipbook
-      .selectAll('img')
-      .transition()
-      .ease(d3.easeCubicOut)
-      .duration(100)
-      .style('transform', `scale(1)`);
-    done2 = true;
-  }
 }
 
 function tickStart() {
@@ -97,6 +87,19 @@ function tickStart() {
 
 function tickStop() {
   timer.stop();
+}
+
+function reaction() {
+  return new Promise(resolve => {
+    const { width } = $flipbook.node().getBoundingClientRect();
+    $flipbook2.style('width', `${width * 1.01}px`);
+    $flipbook2
+      .transition()
+      .duration(500)
+      .ease(d3.easeCubicOut)
+      .style('bottom', `${HEIGHT * 0.5}px`)
+      .on('end', resolve);
+  });
 }
 
 async function run() {
@@ -112,10 +115,10 @@ async function run() {
   await pause(1);
   scaleFlip(7.49);
   await tickStart();
-  await flipbook.play({ id: '#flipbook-l2m', early: 0.95 });
+  await flipbook.play({ id: '#flipbook-l2m', early: 0.85 });
+  await reaction();
+  await flipbook.play({ id: '#flipbook-spike', early: 0.75, loops: 2 });
   await tickStop();
-  await scaleFlip(1);
-  // await pause(0.5);
   await slide({ sel: $section, state: 'exit' });
   return true;
 }

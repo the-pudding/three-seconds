@@ -48,10 +48,13 @@
 
 
 			{{#ifEquals chart 'video' }}
-			<figure>
-
-			</figure>
+			<figure></figure>
 			<div id='flipbook-{{video}}' class='flipbook' data-src='assets/videos/{{video}}' data-frames='{{frames}}'
+				data-rate='29.97'></div>
+			{{/ifEquals }}
+
+			{{#ifEquals chart2 'video' }}
+			<div id='flipbook-{{video2}}' class='flipbook' data-src='assets/videos/{{video2}}' data-frames='{{frames2}}'
 				data-rate='29.97'></div>
 			{{/ifEquals }}
 
