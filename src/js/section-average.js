@@ -102,9 +102,6 @@ function resize() {
   const margin = Math.floor(WIDTH * 0.05);
   const fontSize = Math.floor(FONT_SIZE * 0.67);
   const radius = Math.floor(fontSize * 0.5);
-  const strokeWidth = Math.floor(WIDTH * 0.005);
-  const axisStrokeWidth = strokeWidth * 0.5;
-  const axisStrokeDash = strokeWidth * 4;
 
   chartWidth = WIDTH - margin * 2;
   chartHeight = HEIGHT * 0.67 - margin * 2;
@@ -123,10 +120,8 @@ function resize() {
     .selectAll('g')
     .attr('transform', (d, i) => `translate(${scaleX(24)}, ${scaleY(i + 1)})`);
 
-  $vis
-    .selectAll('circle')
-    .attr('r', radius)
-    .style('stroke-width', `${strokeWidth}px`);
+  $vis.selectAll('circle').attr('r', radius);
+
   $vis
     .selectAll('text')
     .attr('x', fontSize)
@@ -139,11 +134,6 @@ function resize() {
     .tickSize(-chartHeight);
 
   $axis.call(axisX);
-
-  $axis
-    .selectAll('line')
-    .style('stroke-width', `${axisStrokeWidth}px`)
-    .style('stroke-dasharray', `${axisStrokeDash}px ${axisStrokeDash}px`);
 
   $svg
     .select('.quarter--2')

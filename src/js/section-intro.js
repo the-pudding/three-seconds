@@ -33,8 +33,6 @@ async function run() {
 
 function resize() {
   toggleLebron({ visible: false });
-  const stroke = Math.floor(WIDTH * 0.004);
-  $section.select('h1').style('-webkit-text-stroke-width', `${stroke}px`);
 }
 
 function init() {

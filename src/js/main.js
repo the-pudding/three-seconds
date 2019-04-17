@@ -19,8 +19,8 @@ async function runAll() {
   // await Intro.run();
   // await Refresher.run();
   // await Average.run();
-  // await Time.run();
-  // await Report.run();
+  await Time.run();
+  await Report.run();
   await Outro.run();
   const end = d3.now();
   const diff = end - start;
@@ -31,10 +31,8 @@ async function runAll() {
 function setupSlide() {
   const sel = d3.select(this);
   slide({ sel, state: 'pre', dur: 0 });
-  const stroke = Math.floor(WIDTH * 0.002);
   const $intertitle = sel.select('.intertitle');
   const $p = $intertitle.select('p');
-  $p.style('-webkit-text-stroke-width', `${stroke}px`);
   typer.prepare($p);
 }
 

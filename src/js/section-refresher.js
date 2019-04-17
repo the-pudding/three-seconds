@@ -116,10 +116,7 @@ async function run() {
   return true;
 }
 
-function resize() {
-  const strokeWidth = Math.floor(WIDTH * 0.005);
-  $svg.selectAll('path').style('stroke-width', `${strokeWidth}px`);
-}
+function resize() {}
 
 function init() {
   $tick = $section
