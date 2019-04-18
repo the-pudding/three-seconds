@@ -56,11 +56,24 @@ function goToFlip() {
 
 function scaleFlip(scale) {
   return new Promise(resolve => {
+    const {
+      width,
+      height,
+      top,
+      left,
+    } = $flipbook.node().getBoundingClientRect();
+    const w = width * scale;
+    const h = height * scale;
+    const t = top - h / 2 + height / 2;
+    const l = Math.ceil(left - w / 2 + width / 2);
     $flipbook
       .transition()
       .duration(500)
       .ease(d3.easeCubicInOut)
-      .style('transform', `scale(${scale})`)
+      .style('width', `${w}px`)
+      .style('height', `${h}px`)
+      .style('top', `${t}px`)
+      .style('left', `${l}px`)
       .on('end', resolve);
   });
 }
@@ -113,7 +126,7 @@ async function run() {
   await pause(1);
   await goToFlip();
   await pause(1);
-  scaleFlip(7.49);
+  scaleFlip(7.5);
   await tickStart();
   await flipbook.play({ id: '#flipbook-l2m', early: 0.85 });
   await reaction();

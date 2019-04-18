@@ -5,6 +5,7 @@ import pause from './pause';
 
 const $section = d3.select('#intro');
 const $byline = $section.select('.byline');
+const $logo = $section.select('.logo');
 const $lebron = d3.select('#lebron');
 
 function toggleLebron({ visible = false, dur = 0 }) {
@@ -25,6 +26,7 @@ async function run() {
   await toggleLebron({ visible: true, dur: 500 });
   await pause(3);
   await animateText({ sel: $byline, state: 'visible' });
+  await animateText({ sel: $logo, state: 'visible' });
   await pause(4);
   toggleLebron({ visible: false, dur: 500 });
   await slide({ sel: $section, state: 'exit' });

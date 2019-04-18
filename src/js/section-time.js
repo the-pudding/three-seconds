@@ -1,6 +1,5 @@
 /* global d3 WIDTH HEIGHT FONT_SIZE */
 import slide from './slide';
-import animateText from './animate-text';
 import pause from './pause';
 import typer from './typer';
 import colors from './colors';
@@ -16,7 +15,6 @@ const $intertitle = $section.select('.intertitle');
 const $p = $intertitle.select('p');
 const $figure = $section.select('figure');
 const $svg = $figure.select('svg');
-const $axis = $svg.select('.g-axis');
 const $vis = $svg.select('.g-vis');
 const $harden = d3.select('#harden');
 
@@ -25,20 +23,20 @@ let chartHeight = 0;
 let maxCount = 0;
 let totalCount = 0;
 let targetCount = 0;
-let strokeWidth = 0;
+let rectHeight = 0;
 
 const scaleX = d3.scaleBand().paddingInner(BAND_PAD);
 
 const scaleY = d3.scaleLinear().clamp(true);
 
 function toggleHarden(state) {
-  const bottom = 0.385 * HEIGHT;
+  const bottom = 0.395 * HEIGHT;
   if (state === 'enter')
     $harden
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('bottom', `${HEIGHT * 0.5}px`);
+      .style('bottom', `${HEIGHT * 0.502}px`);
   else if (state === 'drop') {
     $harden
       .transition()
@@ -60,7 +58,7 @@ function toggleHarden(state) {
 function quarter(q) {
   return new Promise(resolve => {
     const x = scaleX(QUARTER_MINS * (q - 1));
-    const y = chartHeight + strokeWidth * 2;
+    const y = chartHeight + rectHeight;
 
     $vis
       .select('.quarter')
@@ -141,15 +139,15 @@ async function run() {
 }
 
 function resize() {
-  const margin = Math.floor(WIDTH * 0.04);
-  strokeWidth = Math.floor(WIDTH * 0.005);
+  const margin = Math.floor(WIDTH * 0.05);
+  rectHeight = Math.floor(WIDTH * 0.02);
 
   chartWidth = WIDTH - margin * 2;
   chartHeight = HEIGHT * 0.67 - margin * 6;
 
   scaleX.rangeRound([0, chartWidth]);
 
-  scaleY.range([strokeWidth + 1, chartHeight]);
+  scaleY.range([0, chartHeight]);
 
   $figure
     .style('width', `${chartWidth + margin * 2}px`)
@@ -161,7 +159,7 @@ function resize() {
     .select('.quarter')
     .attr(
       'transform',
-      `translate(${-scaleX(QUARTER_MINS)}, ${chartHeight + strokeWidth * 2})`
+      `translate(${-scaleX(QUARTER_MINS)}, ${chartHeight + rectHeight})`
     );
 
   const quarterW = scaleX.bandwidth() * (1 + BAND_PAD) * (QUARTER_MINS / BIN);
@@ -171,20 +169,19 @@ function resize() {
     .attr('x', 0)
     .attr('y', 0)
     .attr('width', quarterW)
-    .attr('height', strokeWidth * 4);
+    .attr('height', rectHeight);
 
   $vis
     .select('.quarter text')
     .attr('x', quarterW / 2)
-    .attr('y', strokeWidth * 4);
+    .attr('y', rectHeight + rectHeight / 2);
 
   $vis
     .selectAll('.minute')
     .attr('x', d => scaleX(d.minute))
     .attr('y', d => chartHeight - scaleY(targetCount))
     .attr('width', scaleX.bandwidth())
-    .attr('height', scaleY(targetCount))
-    .style('stroke-width', strokeWidth);
+    .attr('height', scaleY(targetCount));
 }
 
 function init({ data }) {
