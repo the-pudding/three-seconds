@@ -106,6 +106,10 @@ function reaction() {
   return new Promise(resolve => {
     const { width } = $flipbook.node().getBoundingClientRect();
     $flipbook2.style('width', `${width * 1.01}px`);
+
+    const h = $flipbook2.node().offsetHeight;
+    $flipbook2.style('bottom', `${HEIGHT + h}px`).classed('is-visible', true);
+
     $flipbook2
       .transition()
       .duration(500)
@@ -136,11 +140,7 @@ async function run() {
   return true;
 }
 
-function resize() {
-  // const borderWidth = Math.floor(WIDTH * 0.005);
-  // $figure.selectAll('img').style('border-width', `${borderWidth}px`);
-  // $flipbook.style('border-width', `${borderWidth}px`);
-}
+function resize() {}
 
 function init() {
   const data = d3.range(138);

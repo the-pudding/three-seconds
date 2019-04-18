@@ -29,8 +29,9 @@
 			transform scale(1.01)
 	
 	#flipbook-spike
-		visibility visible
-		bottom 120%
+		visibility hidden
 		left 49%
 		transform translate(-50%, 50%)
 		border 0.25em solid $white
+		&.is-visible
+			visibility visible

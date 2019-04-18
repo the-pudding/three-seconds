@@ -14,8 +14,10 @@
 			transform translate(0,0) scale(1)
 
 	#flipbook-jimmy
-		top -25%
+		visibility hidden
 		border 0.25em solid $white
+		&.is-visible
+			visibility visible
 
 	.tick	
 		position absolute

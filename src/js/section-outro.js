@@ -57,11 +57,17 @@ function tickStop() {
 
 function reaction() {
   return new Promise(resolve => {
+    const h = $flipbook2.node().offsetWidth;
+    $flipbook2
+      .style('bottom', `${HEIGHT + h}px`)
+      .style('height', `${h}px`)
+      .classed('is-visible', true);
+
     $flipbook2
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('top', `${HEIGHT * 0.5}px`)
+      .style('bottom', `${HEIGHT * 0.5}px`)
       .on('end', resolve);
   });
 }
