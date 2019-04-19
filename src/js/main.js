@@ -1,4 +1,4 @@
-/* global d3 WIDTH HEIGHT FONT_SIZE */
+/* global d3 WIDTH HEIGHT FONT_SIZE SQUARE */
 import '@babel/polyfill';
 import './utils/render-d3-video';
 import loadData from './load-data';
@@ -20,8 +20,8 @@ async function runAll() {
   // await Refresher.run();
   // await Average.run();
   // await Time.run();
-  // await Report.run();
-  await Outro.run();
+  await Report.run();
+  // await Outro.run();
   const end = d3.now();
   const diff = end - start;
   const frames = (diff / 1000) * 60;
@@ -39,12 +39,14 @@ function setupSlide() {
 window.renderD3Video = async function renderD3Video({ width, height }) {
   window.WIDTH = width;
   window.HEIGHT = height;
+  window.SQUARE = width === height;
   window.FONT_SIZE = Math.floor(width * 0.05);
 
   $main
     .style('width', `${width}px`)
     .style('height', `${height}px`)
-    .style('font-size', `${FONT_SIZE}px`);
+    .style('font-size', `${FONT_SIZE}px`)
+    .classed('is-square', SQUARE);
 
   d3.selectAll('section').each(setupSlide);
 
@@ -64,7 +66,7 @@ window.renderD3Video = async function renderD3Video({ width, height }) {
 function devStart() {
   if (window.currentTime === undefined) {
     window.DEV = true;
-    window.renderD3Video({ width: 1080, height: 1920 });
+    window.renderD3Video({ width: 1920, height: 1920 });
   }
 }
 

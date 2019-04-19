@@ -1,4 +1,4 @@
-/* global d3 WIDTH HEIGHT FONT_SIZE */
+/* global d3 WIDTH HEIGHT FONT_SIZE SQUARE */
 import slide from './slide';
 import animateText from './animate-text';
 import pause from './pause';
@@ -140,11 +140,9 @@ async function run() {
   return true;
 }
 
-function resize() {}
-
-function init() {
+function resize() {
   const data = d3.range(138);
-  const special = 9 * 7 + 3;
+  const special = SQUARE ? 8 * 9 + 4 : 9 * 7 + 3;
   $figure
     .selectAll('img')
     .data(data)
@@ -156,5 +154,7 @@ function init() {
 
   $figure.select('.is-special').attr('src', `${firstFrame}/1.png`);
 }
+
+function init() {}
 
 export default { init, resize, run };

@@ -104,7 +104,7 @@ function resize() {
   const radius = Math.floor(fontSize * 0.5);
 
   chartWidth = WIDTH - margin * 2;
-  chartHeight = HEIGHT * 0.67 - margin * 2;
+  chartHeight = HEIGHT * 0.75 - margin * 2;
 
   scaleX.range([0, chartWidth]);
   scaleY.rangeRound([0, chartHeight]);
