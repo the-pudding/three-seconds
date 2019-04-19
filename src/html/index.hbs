@@ -7,8 +7,6 @@
 
 	<link inline rel='stylesheet' href='bundle.css' />
 
-	{{!-- <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900" rel="stylesheet"> --}}
-
 	{{> base/font}}
 
 
@@ -26,9 +24,12 @@
 		<section id='{{id}}'>
 
 			{{#ifEquals id 'intro' }}
-			<h1>{{{title}}}</h1>
+			<img inline src='intro.svg'>
+			<h1 class='intro__title--1'>{{{title1}}}</h1>
+			<h1 class='intro__title--2'>{{{title2}}}</h1>
+			<h1 class='intro__title--3'>{{{title3}}}</h1>
 			<h2 class='byline'>{{{text}}}</h2>
-			<div class='logo'><img inline src='pudding/wordmark.svg'></div>
+			<div class='logo'><img inline src='pudding/logo.svg'></div>
 			{{/ifEquals }}
 
 			{{#ifEquals chart 'svg' }}

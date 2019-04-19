@@ -23,11 +23,12 @@ function toggleLebron({ visible = false, dur = 0 }) {
 
 async function run() {
   await slide({ sel: $section, state: 'enter' });
-  await toggleLebron({ visible: true, dur: 500 });
   await pause(3);
   await animateText({ sel: $byline, state: 'visible' });
   await animateText({ sel: $logo, state: 'visible' });
-  await pause(4);
+  await pause(2);
+  await toggleLebron({ visible: true, dur: 500 });
+  await pause(2);
   toggleLebron({ visible: false, dur: 500 });
   await slide({ sel: $section, state: 'exit' });
   return true;
