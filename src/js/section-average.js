@@ -91,7 +91,7 @@ async function run() {
   await toggleLance({ visible: true, dur: 500 });
   animateText({ sel: $figure.select('.observe--expectation'), state: 'exit' });
   animateText({ sel: $figure.select('.observe--reality'), state: 'visible' });
-  await pause(1);
+  await pause(2);
   await toggleLance({ visible: false, dur: 500 });
   await pause(4);
   await slide({ sel: $section, state: 'exit' });
@@ -168,27 +168,30 @@ function init({ data }) {
       return $g;
     });
 
-  $svg
-    .append('text')
-    .attr('class', 'quarter quarter--2')
-    .attr('text-anchor', 'middle')
+  const $period = $figure.append('div').attr('class', 'periods');
+
+  $period
+    .append('p')
+    .attr('class', 'period period--2')
     .text('Q2');
 
-  $svg
-    .append('text')
-    .attr('class', 'quarter quarter--3')
-    .attr('text-anchor', 'middle')
+  $period
+    .append('p')
+    .attr('class', 'period period--half')
+    .text('Halftime');
+
+  $period
+    .append('p')
+    .attr('class', 'period period--3')
     .text('Q3');
 
-  const $oE = $figure
-    .append('p')
-    .attr('class', 'observe observe--expectation')
-    .text('Expectation');
+  const $oE = $figure.append('p').attr('class', 'observe observe--expectation');
 
-  const $oR = $figure
-    .append('p')
-    .attr('class', 'observe observe--reality')
-    .text('Reality');
+  $oE.append('span').text('Expectation');
+
+  const $oR = $figure.append('p').attr('class', 'observe observe--reality');
+
+  $oR.append('span').text('Reality');
 
   animateText({ sel: $oE, state: 'pre', dur: 0 });
   animateText({ sel: $oR, state: 'pre', dur: 0 });

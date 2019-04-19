@@ -20,7 +20,9 @@ function tick() {
   const cur = d3.now();
   const diff = (cur - timeStart) / 1000;
   const t = diff.toFixed(1);
-  $tick.html(`${diff > 10 || t.includes('10') ? '???' : t} <span>🤔</span>`);
+  $tick.html(
+    `${diff > 10 || t.includes('10') ? '???' : t}<span>seconds</span>`
+  );
   if (diff > 2.5 && !done2X) {
     $flipbook
       .selectAll('img')
@@ -89,7 +91,7 @@ function init() {
   $tick = $section
     .append('p')
     .attr('class', 'tick')
-    .html('0.0 <span>🤔</span>');
+    .html('0.0<span>seconds</span>');
 
   animateText({ sel: $tick, state: 'pre', dur: 0 });
 }

@@ -12,39 +12,62 @@
 	.foul
 		circle
 			stroke $fg
-			fill $bg
+			fill lighten($bg-invert, 25)
 			stroke-opacity 0.5
 			stroke-width $stroke-width
 	
 		text
 			fill $fg
 			fill-opacity 0.5
+			font-family $sans
+			font-weight 600
 	
 		&.is-highlight
 			circle
-				fill $primary
 				stroke-opacity 1
+				fill-opacity 1
+				fill $tertiary
 			text
 				fill $fg
 				fill-opacity 1
-			
-	.quarter
-		fill $secondary
-		font-weight 900
-		letter-spacing 0.01em
-		font-size 1.25em
 	
 	.observe
 		position absolute
 		bottom -5%
-		left 0
-		width 100%
+		left 5%
+		width 95%
 		text-align center
-		font-weight 900
-		letter-spacing 0.01em
-		color $secondary
-		font-size 1.25em
-		text-transform uppercase
-		line-height 1
+		span
+			font-size 1.25em
+			font-weight 400
+			text-transform uppercase
+			line-height 1
+			font-family $sans-display
+			background-color $secondary
+			color $white
+			padding 0.25em 0.5em
 
+	.periods
+		display flex
+		position absolute
+		top 0%
+		left 5%
+		width 90%
+		justify-content center
+		align-items center
+		transform translateY(-50%)
+	
+	.period
+		width 25%
+		text-align center
+		text-transform uppercase
+		font-family $sans-display
+		font-weight 400
+		color $secondary
+		font-size 2em
+		&:nth-of-type(2)
+			font-family $sans
+			font-weight 600
+			color $bg-invert
+			font-size 1em
 

@@ -30,13 +30,13 @@ const scaleX = d3.scaleBand().paddingInner(BAND_PAD);
 const scaleY = d3.scaleLinear().clamp(true);
 
 function toggleHarden(state) {
-  const bottom = (SQUARE ? 0.35 : 0.395) * HEIGHT;
+  const bottom = (SQUARE ? 0.35 : 0.352) * HEIGHT;
   if (state === 'enter')
     $harden
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('bottom', `${HEIGHT * (SQUARE ? 0.49 : 0.502)}px`);
+      .style('bottom', `${HEIGHT * (SQUARE ? 0.49 : 0.522)}px`);
   else if (state === 'drop') {
     $harden
       .transition()
@@ -76,8 +76,10 @@ function quarter(q) {
       .duration(500)
       // .delay((d, i) => i * 10)
       .ease(d3.easeCubicOut)
-      .style('fill', d => (d.quarter === q ? colors.primary : colors.bgInvert))
-      .style('opacity', d => (d.quarter === q ? 1 : 0.5))
+      .style('fill', d =>
+        d.quarter === q ? colors.secondary : colors.bgInvert2
+      )
+      // .style('opacity', d => (d.quarter === q ? 1 : 0.5))
       .on('end', (d, i, n) => {
         if (i === n.length - 1) resolve();
       });
@@ -140,7 +142,7 @@ async function run() {
 
 function resize() {
   const margin = Math.floor(WIDTH * 0.05);
-  rectHeight = Math.floor(WIDTH * 0.02);
+  rectHeight = Math.floor(WIDTH * 0.01);
 
   chartWidth = WIDTH - margin * 2;
   chartHeight = HEIGHT * 0.95 - margin * 6;
@@ -174,7 +176,7 @@ function resize() {
   $vis
     .select('.quarter text')
     .attr('x', quarterW / 2)
-    .attr('y', rectHeight + rectHeight / 2);
+    .attr('y', rectHeight * 2);
 
   $vis
     .selectAll('.minute')

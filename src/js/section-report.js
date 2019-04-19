@@ -129,8 +129,6 @@ function reaction() {
 
 async function run() {
   await slide({ sel: $section, state: 'enter' });
-  // await animateText({ sel: $p, visible: true });
-  // await pause(2);
   await typer.reveal($p);
   await pause(5);
   await slide({ sel: $intertitle, state: 'exit' });
@@ -139,7 +137,6 @@ async function run() {
   await goToFlip();
   await pause(1);
   scaleFlip();
-  // await pause(10000);
   await tickStart();
   await flipbook.play({ id: '#flipbook-l2m', early: 0.85 });
   await reaction();

@@ -22,7 +22,7 @@ function tick() {
   const cur = d3.now();
   const diff = (cur - timeStart) / 1000;
   const t = diff.toFixed(1);
-  $tick.text(t);
+  $tick.html(`${t}<span>seconds</span>`);
   if (diff >= 3.0 && !done) {
     done = true;
   }
@@ -122,7 +122,7 @@ function init() {
   $tick = $section
     .append('p')
     .attr('class', 'tick')
-    .text('0.0');
+    .html('0.0<span>seconds</span>');
 
   animateText({ sel: $tick, state: 'pre', dur: 0 });
 }
