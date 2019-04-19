@@ -16,10 +16,10 @@ const $main = d3.select('main');
 
 async function runAll() {
   const start = d3.now();
-  await Intro.run();
-  await Refresher.run();
+  // await Intro.run();
+  // await Refresher.run();
   await Average.run();
-  await Time.run();
+  // await Time.run();
   await Report.run();
   await Outro.run();
   const end = d3.now();
