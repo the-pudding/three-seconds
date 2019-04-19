@@ -21,7 +21,7 @@ async function runAll() {
   // await Average.run();
   // await Time.run();
   await Report.run();
-  // await Outro.run();
+  await Outro.run();
   const end = d3.now();
   const diff = end - start;
   const frames = (diff / 1000) * 60;
@@ -66,7 +66,7 @@ window.renderD3Video = async function renderD3Video({ width, height }) {
 function devStart() {
   if (window.currentTime === undefined) {
     window.DEV = true;
-    window.renderD3Video({ width: 1920, height: 1920 });
+    window.renderD3Video({ width: 1080, height: 1920 });
   }
 }
 

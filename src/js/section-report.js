@@ -15,7 +15,6 @@ const $flipbook2 = $section.select('#flipbook-spike');
 let timeStart = 0;
 let timer = null;
 let done1 = false;
-const done2 = false;
 
 function revealFigure() {
   return new Promise(resolve => {
@@ -54,7 +53,7 @@ function goToFlip() {
   });
 }
 
-function scaleFlip(scale) {
+function scaleFlip() {
   return new Promise(resolve => {
     const {
       width,
@@ -62,10 +61,19 @@ function scaleFlip(scale) {
       top,
       left,
     } = $flipbook.node().getBoundingClientRect();
+    const scale = (WIDTH * (SQUARE ? 0.6 : 0.9)) / width;
     const w = width * scale;
     const h = height * scale;
     const t = top - h / 2 + height / 2;
     const l = Math.ceil(left - w / 2 + width / 2);
+
+    $flipbook
+      .select('img')
+      .transition()
+      .duration(500)
+      .ease(d3.easeCubicInOut)
+      .style('transform', 'scale(1.01)');
+
     $flipbook
       .transition()
       .duration(500)
@@ -104,17 +112,17 @@ function tickStop() {
 
 function reaction() {
   return new Promise(resolve => {
-    const { width } = $flipbook.node().getBoundingClientRect();
-    $flipbook2.style('width', `${width * 1.01}px`);
+    const { width, height, top } = $flipbook.node().getBoundingClientRect();
+    $flipbook2.style('width', `${width}px`);
 
     const h = $flipbook2.node().offsetHeight;
-    $flipbook2.style('bottom', `${HEIGHT + h}px`).classed('is-visible', true);
+    $flipbook2.style('bottom', `${HEIGHT}px`).classed('is-visible', true);
 
     $flipbook2
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('bottom', `${HEIGHT * 0.5}px`)
+      .style('bottom', `${HEIGHT - top - height / 2}px`)
       .on('end', resolve);
   });
 }
@@ -130,7 +138,8 @@ async function run() {
   await pause(1);
   await goToFlip();
   await pause(1);
-  scaleFlip(7.5);
+  scaleFlip();
+  // await pause(10000);
   await tickStart();
   await flipbook.play({ id: '#flipbook-l2m', early: 0.85 });
   await reaction();
@@ -142,7 +151,7 @@ async function run() {
 
 function resize() {
   const data = d3.range(138);
-  const special = SQUARE ? 8 * 9 + 4 : 9 * 7 + 3;
+  const special = SQUARE ? 9 * 7 + 4 : 9 * 7 + 3;
   $figure
     .selectAll('img')
     .data(data)
