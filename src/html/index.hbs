@@ -20,6 +20,7 @@
 
 	<main id='content'>
 		{{> base/header }}
+		<figure id='l2m'></figure>
 		{{#each doc.section }}
 		<section id='{{id}}'>
 
@@ -50,7 +51,6 @@
 
 
 			{{#ifEquals chart 'video' }}
-			<figure></figure>
 			<div id='flipbook-{{video}}' class='flipbook' data-src='assets/videos/{{video}}' data-frames='{{frames}}'
 				data-rate='29.97'></div>
 			{{/ifEquals }}
@@ -75,6 +75,8 @@
 			<img id='dirk' src='assets/images/dirk.png'>
 			<img id='wade' src='assets/images/wade.png'>
 		</div>
+
+		<img inline src='frame.svg'>
 	</main>
 
 	<script src='{{basepath}}assets/scripts/d3.v5.9.1.min.js'></script>

@@ -89,6 +89,7 @@ async function run() {
   await pause(4);
   await moveDots();
   await toggleLance({ visible: true, dur: 500 });
+  await pause(0.5);
   animateText({ sel: $figure.select('.observe--expectation'), state: 'exit' });
   animateText({ sel: $figure.select('.observe--reality'), state: 'visible' });
   await pause(2);

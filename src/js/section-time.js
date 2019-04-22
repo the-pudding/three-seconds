@@ -63,7 +63,7 @@ function quarter(q) {
     $vis
       .select('.quarter')
       .transition()
-      .duration(500)
+      .duration(250)
       .ease(d3.easeCubicOut)
       .attr('transform', `translate(${x}, ${y})`)
       .style('opacity', 1)
@@ -73,7 +73,7 @@ function quarter(q) {
     $vis
       .selectAll('.minute')
       .transition()
-      .duration(500)
+      .duration(250)
       // .delay((d, i) => i * 10)
       .ease(d3.easeCubicOut)
       .style('fill', d =>
@@ -115,24 +115,21 @@ function revealFigure() {
 
 async function run() {
   await slide({ sel: $section, state: 'enter' });
-  // await animateText({ sel: $p, visible: true });
   await typer.reveal($p);
   await pause(3.5);
   await revealFigure();
   await slide({ sel: $intertitle, state: 'exit' });
   await pause(1);
   await toggleHarden('enter');
-  // revealFigure();
   await pause(0.48);
   await toggleHarden('drop');
   await moveBars();
-  // await pause(1);
   await quarter(1);
-  await pause(0.5);
+  await pause(0.75);
   await quarter(2);
-  await pause(0.5);
+  await pause(0.75);
   await quarter(3);
-  await pause(0.5);
+  await pause(0.75);
   await quarter(4);
   await pause(2.5);
   await toggleHarden('exit');

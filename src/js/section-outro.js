@@ -8,7 +8,7 @@ const $section = d3.select('#outro');
 const $intertitle = $section.select('.intertitle');
 const $p = $intertitle.select('p');
 const $flipbook = $section.select('#flipbook-point');
-const $flipbook2 = $section.select('#flipbook-jimmy');
+const $flipbook2 = $section.select('#flipbook-nurse');
 
 let $tick = null;
 let timeStart = null;
@@ -80,7 +80,7 @@ async function run() {
   await tickStart();
   await flipbook.play({ id: '#flipbook-point', early: 0.9 });
   await reaction();
-  await flipbook.play({ id: '#flipbook-jimmy', early: 0.9 });
+  await flipbook.play({ id: '#flipbook-nurse', early: 0.9 });
   await tickStop();
   await slide({ sel: $section, state: 'exit' });
 }

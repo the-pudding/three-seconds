@@ -8,7 +8,7 @@ import typer from './typer';
 const $section = d3.select('#report');
 const $intertitle = $section.select('.intertitle');
 const $p = $intertitle.select('p');
-const $figure = $section.select('figure');
+const $figure = d3.select('#l2m');
 const $flipbook = $section.select('#flipbook-l2m');
 const $flipbook2 = $section.select('#flipbook-spike');
 
@@ -72,7 +72,7 @@ function scaleFlip() {
       .transition()
       .duration(500)
       .ease(d3.easeCubicInOut)
-      .style('transform', 'scale(1.01)');
+      .style('transform', 'scale(1.02)');
 
     $flipbook
       .transition()
