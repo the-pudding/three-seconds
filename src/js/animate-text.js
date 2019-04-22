@@ -1,6 +1,6 @@
 /* global d3 WIDTH HEIGHT FONT_SIZE */
 
-export default function({ sel, state = 'pre', dur = 500 }) {
+export default function({ sel, state = 'pre', dur = 500, delay = 0 }) {
   return new Promise(resolve => {
     const h = sel.node().offsetHeight;
     let y = h;
@@ -12,6 +12,7 @@ export default function({ sel, state = 'pre', dur = 500 }) {
     sel
       .transition()
       .duration(dur)
+      .delay(delay)
       .ease(e)
       .style('opacity', o)
       .style('transform', `translate(0px, ${y}px)`)

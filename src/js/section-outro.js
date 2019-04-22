@@ -57,6 +57,11 @@ function tickStart() {
   const y = HEIGHT * 0.525 + h / 2;
   $tick.style('top', `${y}px`);
   animateText({ sel: $tick, state: 'visible' });
+  animateText({
+    sel: $section.select('.observe'),
+    state: 'visible',
+    delay: 500,
+  });
   timer = d3.timer(tick);
   return Promise.resolve();
 }
@@ -86,7 +91,6 @@ async function run() {
   await slide({ sel: $section, state: 'enter' });
   await slide({ sel: $intertitle, state: 'exit', dur: 0 });
   await tickStart();
-  animateText({ sel: $section.select('.observe'), state: 'visible' });
   await flipbook.play({ id: '#flipbook-point', early: 0.9 });
   await reaction();
   await flipbook.play({ id: '#flipbook-nurse', early: 0.9 });

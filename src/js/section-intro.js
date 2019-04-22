@@ -8,6 +8,30 @@ const $byline = $section.select('.byline');
 const $logo = $section.select('.logo');
 const $lebron = d3.select('#lebron');
 
+function slideTitle({ sel, dur = 500, delay = 0 }) {
+  return new Promise(resolve => {
+    sel
+      .transition()
+      .delay(delay)
+      .duration(500)
+      .ease(d3.easeCubicOut)
+      .style('left', `${WIDTH * 0.05}px`)
+      .on('end', resolve);
+  });
+}
+
+function slideX({ sel, dur = 500, delay = 0 }) {
+  return new Promise(resolve => {
+    sel
+      .transition()
+      .delay(delay)
+      .duration(500)
+      .ease(d3.easeCubicOut)
+      .style('transform', `translate(0, 0)`)
+      .on('end', resolve);
+  });
+}
+
 function toggleLebron({ visible = false, dur = 0 }) {
   const x = visible ? 0 : $lebron.node().offsetWidth;
 
@@ -16,18 +40,23 @@ function toggleLebron({ visible = false, dur = 0 }) {
       .transition()
       .duration(dur)
       .ease(d3.easeCubicInOut)
-      .style('transform', `translate(${x}px, 0px) rotate(-35deg) scaleX(-1)`)
+      .style('transform', `translate(${x}px, 0px) rotate(-30deg) scaleX(-1)`)
       .on('end', resolve);
   });
 }
 
 async function run() {
   await slide({ sel: $section, state: 'enter' });
-  await pause(3);
+  await slideX({ sel: d3.select('#three') });
+  slideX({ sel: d3.select('#key') });
+  slideX({ sel: d3.select('#paint'), delay: 150 });
+  await slideTitle({ sel: d3.select('.intro__title--2'), delay: 400 });
+  await pause(0.5);
+  toggleLebron({ visible: true, dur: 500 });
+  await pause(0.25);
   await animateText({ sel: $byline, state: 'visible' });
+  await pause(1.5);
   await animateText({ sel: $logo, state: 'visible' });
-  await pause(2);
-  await toggleLebron({ visible: true, dur: 500 });
   await pause(2);
   toggleLebron({ visible: false, dur: 500 });
   await slide({ sel: $section, state: 'exit' });
