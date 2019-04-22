@@ -137,6 +137,7 @@ async function run() {
   await goToFlip();
   await pause(1);
   scaleFlip();
+  animateText({ sel: $section.select('.observe'), state: 'visible' });
   await tickStart();
   await flipbook.play({ id: '#flipbook-l2m', early: 0.85 });
   await reaction();
@@ -161,6 +162,13 @@ function resize() {
   $figure.select('.is-special').attr('src', `${firstFrame}/1.png`);
 }
 
-function init() {}
+function init() {
+  const $o = $section
+    .append('p')
+    .attr('class', 'observe')
+    .html('<span>When it’s called...</span>');
+
+  animateText({ sel: $o, state: 'pre', dur: 0 });
+}
 
 export default { init, resize, run };

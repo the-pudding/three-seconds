@@ -43,6 +43,14 @@ function tick() {
   }
 }
 
+function slideFig() {
+  d3.select('#l2m')
+    .transition()
+    .duration(500)
+    .ease(d3.easeCubicIn)
+    .style('left', `-${WIDTH}px`);
+}
+
 function tickStart() {
   timeStart = d3.now();
   const h = $flipbook.node().offsetWidth;
@@ -78,10 +86,12 @@ async function run() {
   await slide({ sel: $section, state: 'enter' });
   await slide({ sel: $intertitle, state: 'exit', dur: 0 });
   await tickStart();
+  animateText({ sel: $section.select('.observe'), state: 'visible' });
   await flipbook.play({ id: '#flipbook-point', early: 0.9 });
   await reaction();
   await flipbook.play({ id: '#flipbook-nurse', early: 0.9 });
   await tickStop();
+  slideFig();
   await slide({ sel: $section, state: 'exit' });
 }
 
@@ -94,6 +104,13 @@ function init() {
     .html('0.0<span>seconds</span>');
 
   animateText({ sel: $tick, state: 'pre', dur: 0 });
+
+  const $o = $section
+    .append('p')
+    .attr('class', 'observe')
+    .html('<span>...When it’s ignored</span>');
+
+  animateText({ sel: $o, state: 'pre', dur: 0 });
 }
 
 export default { init, resize, run };
