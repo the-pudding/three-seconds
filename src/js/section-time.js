@@ -36,7 +36,7 @@ function toggleHarden(state) {
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('bottom', `${HEIGHT * (SQUARE ? 0.49 : 0.522)}px`);
+      .style('bottom', `${HEIGHT * (SQUARE ? 0.49 : 0.52)}px`);
   else if (state === 'drop') {
     $harden
       .transition()

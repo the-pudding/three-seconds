@@ -13,7 +13,7 @@ function slideTitle({ sel, dur = 500, delay = 0 }) {
     sel
       .transition()
       .delay(delay)
-      .duration(500)
+      .duration(dur)
       .ease(d3.easeCubicOut)
       .style('left', `${WIDTH * 0.05}px`)
       .on('end', resolve);
@@ -25,9 +25,9 @@ function slideX({ sel, dur = 500, delay = 0 }) {
     sel
       .transition()
       .delay(delay)
-      .duration(500)
+      .duration(dur)
       .ease(d3.easeCubicOut)
-      .style('transform', `translate(0, 0)`)
+      .attr('transform', `translate(0, 0)`)
       .on('end', resolve);
   });
 }
@@ -65,6 +65,9 @@ async function run() {
 
 function resize() {
   toggleLebron({ visible: false });
+  $section
+    .selectAll('#court path')
+    .attr('transform', `translate(-${WIDTH}, 0)`);
 }
 
 function init() {
