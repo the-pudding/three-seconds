@@ -1,4 +1,4 @@
-/* global d3 WIDTH HEIGHT FONT_SIZE */
+/* global d3 WIDTH HEIGHT FONT_SIZE SQUARE */
 import slide from './slide';
 import animateText from './animate-text';
 import typer from './typer';
@@ -145,6 +145,26 @@ function resize() {
     .attr('transform', `translate(${WIDTH * 0.725}, ${margin})`);
 
   toggleLance({ visible: false });
+
+  if (SQUARE) {
+    const $span = $intertitle.selectAll('span');
+    $span
+      .filter((d, i) => $span.size() - 3 === i)
+      .each((d, i, n) => {
+        const $s = d3.select(n[i]);
+        const text = $s.text();
+        $s.html(
+          `${text}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong></strong>`
+        );
+      });
+    $span
+      .filter((d, i) => $span.size() - 2 === i)
+      .each((d, i, n) => {
+        const $s = d3.select(n[i]);
+        $s.html(`<em>that’s unusual.</em>`);
+      });
+    $span.filter((d, i) => $span.size() - 1 === i).remove();
+  }
 }
 
 function init({ data }) {

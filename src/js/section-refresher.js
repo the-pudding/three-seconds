@@ -1,4 +1,4 @@
-/* global d3 WIDTH HEIGHT  FONT_SIZE */
+/* global d3 WIDTH HEIGHT  FONT_SIZE SQUARE */
 import slide from './slide';
 import typer from './typer';
 import pause from './pause';
@@ -116,7 +116,18 @@ async function run() {
   return true;
 }
 
-function resize() {}
+function resize() {
+  if (SQUARE) {
+    const $span = $intertitle.selectAll('span');
+    $span
+      .filter((d, i) => $span.size() - 2 === i)
+      .each((d, i, n) => {
+        const $s = d3.select(n[i]);
+        $s.html(`<em>the floor is lava.</em>`);
+      });
+    $span.filter((d, i) => $span.size() - 1 === i).remove();
+  }
+}
 
 function init() {
   $tick = $section

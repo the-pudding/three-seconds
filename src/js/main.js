@@ -10,6 +10,7 @@ import Time from './section-time';
 import Average from './section-average';
 import Report from './section-report';
 import Outro from './section-outro';
+import Fin from './section-fin';
 import typer from './typer';
 
 const $main = d3.select('main');
@@ -22,6 +23,7 @@ async function runAll() {
   await Time.run();
   await Report.run();
   await Outro.run();
+  await Fin.run();
   const end = d3.now();
   const diff = end - start;
   const frames = (diff / 1000) * 60;
@@ -66,7 +68,7 @@ window.renderD3Video = async function renderD3Video({ width, height }) {
 function devStart() {
   if (window.currentTime === undefined) {
     window.DEV = true;
-    window.renderD3Video({ width: 1080, height: 1920 });
+    window.renderD3Video({ width: 1080, height: 1080 });
   }
 }
 

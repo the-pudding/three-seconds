@@ -160,6 +160,11 @@ function resize() {
   const firstFrame = $flipbook.attr('data-src');
 
   $figure.select('.is-special').attr('src', `${firstFrame}/1.png`);
+
+  if (SQUARE) {
+    const $span = $intertitle.selectAll('span');
+    $span.filter((d, i) => i === 1).style('margin-right', '400px');
+  }
 }
 
 function init() {

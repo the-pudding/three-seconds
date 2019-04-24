@@ -30,13 +30,13 @@ const scaleX = d3.scaleBand().paddingInner(BAND_PAD);
 const scaleY = d3.scaleLinear().clamp(true);
 
 function toggleHarden(state) {
-  const bottom = (SQUARE ? 0.35 : 0.352) * HEIGHT;
+  const bottom = (SQUARE ? 0.352 : 0.352) * HEIGHT;
   if (state === 'enter')
     $harden
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('bottom', `${HEIGHT * (SQUARE ? 0.49 : 0.52)}px`);
+      .style('bottom', `${HEIGHT * (SQUARE ? 0.492 : 0.52)}px`);
   else if (state === 'drop') {
     $harden
       .transition()
@@ -181,6 +181,13 @@ function resize() {
     .attr('y', d => chartHeight - scaleY(targetCount))
     .attr('width', scaleX.bandwidth())
     .attr('height', scaleY(targetCount));
+
+  if (SQUARE) {
+    const $span = $intertitle.selectAll('span');
+    $span
+      .filter((d, i) => i === $span.size() - 2)
+      .html('quarter.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+  }
 }
 
 function init({ data }) {
