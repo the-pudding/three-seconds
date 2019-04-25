@@ -149,7 +149,7 @@ async function run() {
 
 function resize() {
   const data = d3.range(138);
-  const special = SQUARE ? 9 * 7 + 4 : 9 * 7 + 3;
+  const special = SQUARE ? 9 * 7 + 4 : 9 * 7 + 4;
   $figure
     .selectAll('img')
     .data(data)
