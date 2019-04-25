@@ -42,7 +42,7 @@ function tick() {
       .style('transform', `translate(${WIDTH * 0.25}px,0) scale(2)`);
     done3X = true;
   }
-  if (diff >= 10.38 && !doneH) {
+  if (diff >= 10.39 && !doneH) {
     $flipbook.selectAll('img').style('transform', `translate(0, 0) scale(1)`);
     doneH = true;
   }
