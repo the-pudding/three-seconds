@@ -4,13 +4,18 @@ function reveal(sel) {
     const firstBB = $span.node().getBoundingClientRect();
     const base = firstBB.top;
     const h = firstBB.height;
+    const id = d3.select(sel.node().parentNode.parentNode).attr('id');
+    const extra = id === 'report' ? 1500 : 0;
     $span
       .transition()
-      .duration(200)
+      .duration(300)
       .delay((d, i, n) => {
         const { top } = n[i].getBoundingClientRect();
         const off = (top - base) / h;
-        return off * 100;
+        const html = d3.select(n[i]).html();
+        const hasEm = html.includes('<em>') && !extra;
+        const hi = hasEm ? 1500 : 0;
+        return (i > 1 ? extra : 0) + hi + off * 250;
       })
       .ease(d3.easeCubicOut)
       .style('opacity', 1)
