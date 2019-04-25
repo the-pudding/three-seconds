@@ -118,12 +118,13 @@ function reaction() {
     const h = $flipbook2.node().offsetHeight;
     $flipbook2.style('bottom', `${HEIGHT}px`).classed('is-visible', true);
 
+    d3.timeout(resolve, 300);
     $flipbook2
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('bottom', `${HEIGHT - top - height / 2}px`)
-      .on('end', resolve);
+      .style('bottom', `${HEIGHT - top - height / 2}px`);
+    // .on('end', resolve);
   });
 }
 

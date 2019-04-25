@@ -29,7 +29,7 @@ async function init() {
   return Promise.resolve();
 }
 
-function play({ id, early, loops = 1 }) {
+function play({ id, early = false, loops = 1 }) {
   return new Promise(resolve => {
     const $f = d3.select(id);
     const $img = $f.select('img');

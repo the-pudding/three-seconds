@@ -15,6 +15,7 @@ let timeStart = null;
 let timer = null;
 let done2X = false;
 let done3X = false;
+let doneH = false;
 
 function tick() {
   const cur = d3.now();
@@ -29,7 +30,7 @@ function tick() {
       .transition()
       .ease(d3.easeCubicOut)
       .duration(500)
-      .style('transform', `translate(${WIDTH * 0.125}px,0) scale(1.5)`);
+      .style('transform', `translate(${WIDTH * 0.125}px,0) scale(1.55)`);
     done2X = true;
   }
   if (diff > 6.5 && !done3X) {
@@ -40,6 +41,10 @@ function tick() {
       .duration(500)
       .style('transform', `translate(${WIDTH * 0.25}px,0) scale(2)`);
     done3X = true;
+  }
+  if (diff >= 10.38 && !doneH) {
+    $flipbook.selectAll('img').style('transform', `translate(0, 0) scale(1)`);
+    doneH = true;
   }
 }
 
@@ -70,30 +75,45 @@ function tickStop() {
   timer.stop();
 }
 
-function reaction() {
-  return new Promise(resolve => {
-    const h = $flipbook2.node().offsetWidth;
-    $flipbook2
-      .style('bottom', `${HEIGHT + h}px`)
-      .style('height', `${h}px`)
-      .classed('is-visible', true);
+function reverseReaction() {
+  $flipbook2
+    .transition()
+    .duration(500)
+    .ease(d3.easeCubicIn)
+    .style('left', `${WIDTH * 1.33}px`)
+    // .style('bottom', `${HEIGHT * 0.5}px`)
+    .on('end', () => {
+      $flipbook2.classed('is-visible', false);
+    });
+}
 
-    $flipbook2
-      .transition()
-      .duration(500)
-      .ease(d3.easeCubicOut)
-      .style('bottom', `${HEIGHT * 0.5}px`)
-      .on('end', resolve);
-  });
+function reaction() {
+  const h = $flipbook2.node().offsetWidth;
+  $flipbook2
+    .style('top', `${HEIGHT / 2 + h * 0.67}px`)
+    .style('height', `${h}px`)
+    .classed('is-visible', true);
+  $flipbook2
+    .transition()
+    .duration(500)
+    .delay(4500)
+    .ease(d3.easeCubicOut)
+    .style('left', `${WIDTH * (0.835 - 0.06)}px`)
+    .on('end', () => {
+      d3.timeout(reverseReaction, 4000);
+    });
+  d3.timeout(() => {
+    flipbook.play({ id: '#flipbook-nurse' });
+  }, 4500 + 300);
+  return Promise.resolve();
 }
 
 async function run() {
-  await slide({ sel: $section, state: 'enter' });
+  await slide({ sel: $section, state: 'enter', early: 0.6 });
   await slide({ sel: $intertitle, state: 'exit', dur: 0 });
   await tickStart();
-  await flipbook.play({ id: '#flipbook-point', early: 0.9 });
   await reaction();
-  await flipbook.play({ id: '#flipbook-nurse', early: 0.9 });
+  await flipbook.play({ id: '#flipbook-point', early: 0.95 });
   await tickStop();
   slideFig();
   await slide({ sel: $section, state: 'exit' });
