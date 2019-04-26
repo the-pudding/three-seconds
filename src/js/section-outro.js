@@ -15,14 +15,13 @@ let timeStart = null;
 let timer = null;
 let done2X = false;
 let done3X = false;
-let doneH = false;
 
 function tick() {
   const cur = d3.now();
   const diff = (cur - timeStart) / 1000;
   const t = diff.toFixed(1);
   $tick.html(
-    `${diff > 10 || t.includes('10') ? '???' : t}<span>seconds</span>`
+    `${diff >= 9 || t.includes('9.') ? '???' : t}<span>seconds</span>`
   );
   if (diff > 2.5 && !done2X) {
     $flipbook
@@ -41,10 +40,6 @@ function tick() {
       .duration(500)
       .style('transform', `translate(${WIDTH * 0.25}px,0) scale(2)`);
     done3X = true;
-  }
-  if (diff >= 10.39 && !doneH) {
-    $flipbook.selectAll('img').style('transform', `translate(0, 0) scale(1)`);
-    doneH = true;
   }
 }
 
@@ -80,7 +75,7 @@ function reverseReaction() {
     .transition()
     .duration(500)
     .ease(d3.easeCubicIn)
-    .style('left', `${WIDTH * 1.33}px`)
+    .style('left', `${WIDTH * 1.375}px`)
     // .style('bottom', `${HEIGHT * 0.5}px`)
     .on('end', () => {
       $flipbook2.classed('is-visible', false);
@@ -88,19 +83,22 @@ function reverseReaction() {
 }
 
 function reaction() {
-  const h = $flipbook2.node().offsetWidth;
-  $flipbook2
-    .style('top', `${HEIGHT / 2 + h * 0.67}px`)
-    .style('height', `${h}px`)
-    .classed('is-visible', true);
   $flipbook2
     .transition()
     .duration(500)
     .delay(4500)
     .ease(d3.easeCubicOut)
-    .style('left', `${WIDTH * (0.835 - 0.06)}px`)
+    .style('left', `${WIDTH * (0.815 - 0.05)}px`)
     .on('end', () => {
       d3.timeout(reverseReaction, 4000);
+    })
+    .on('start', () => {
+      const h = $flipbook2.node().offsetWidth;
+      const hf = $flipbook.node().offsetHeight / 2;
+      $flipbook2
+        .style('top', `${HEIGHT / 2 + hf}px`)
+        .style('height', `${h}px`)
+        .classed('is-visible', true);
     });
   d3.timeout(() => {
     flipbook.play({ id: '#flipbook-nurse' });
@@ -117,6 +115,7 @@ async function run() {
   await tickStop();
   slideFig();
   await slide({ sel: $section, state: 'exit' });
+  return true;
 }
 
 function resize() {}

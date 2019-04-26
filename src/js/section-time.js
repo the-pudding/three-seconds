@@ -3,6 +3,7 @@ import slide from './slide';
 import pause from './pause';
 import typer from './typer';
 import colors from './colors';
+import animateText from './animate-text';
 
 const FOUL = 'Defensive 3 Seconds';
 const MINUTES = d3.range(0, 48);
@@ -30,13 +31,13 @@ const scaleX = d3.scaleBand().paddingInner(BAND_PAD);
 const scaleY = d3.scaleLinear().clamp(true);
 
 function toggleHarden(state) {
-  const bottom = (SQUARE ? 0.352 : 0.352) * HEIGHT;
+  const bottom = (SQUARE ? 0.352 : 0.3675) * HEIGHT;
   if (state === 'enter')
     $harden
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('bottom', `${HEIGHT * (SQUARE ? 0.492 : 0.52)}px`);
+      .style('bottom', `${HEIGHT * (SQUARE ? 0.492 : 0.515)}px`);
   else if (state === 'drop') {
     $harden
       .transition()
@@ -116,9 +117,10 @@ function revealFigure() {
 async function run() {
   await slide({ sel: $section, state: 'enter' });
   await typer.reveal($p);
-  await pause(3.5);
+  await pause(1.5);
   await revealFigure();
   await slide({ sel: $intertitle, state: 'exit' });
+  animateText({ sel: $section.select('.observe'), state: 'visible' });
   await pause(1);
   await toggleHarden('enter');
   await pause(0.48);
@@ -142,7 +144,7 @@ function resize() {
   rectHeight = Math.floor(WIDTH * 0.01);
 
   chartWidth = WIDTH - margin * 2;
-  chartHeight = HEIGHT * 0.95 - margin * 6;
+  chartHeight = HEIGHT * 0.85 - margin * 6;
 
   scaleX.rangeRound([0, chartWidth]);
 
@@ -243,6 +245,13 @@ function init({ data }) {
     .attr('y', 0)
     .attr('width', 0)
     .attr('height', 0);
+
+  const $o = $section
+    .append('p')
+    .attr('class', 'observe')
+    .html('<span>Defensive Three Seconds</span>');
+
+  animateText({ sel: $o, state: 'pre', dur: 0 });
 }
 
 export default { init, resize, run };

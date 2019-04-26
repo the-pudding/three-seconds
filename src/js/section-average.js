@@ -76,7 +76,7 @@ async function run() {
   await slide({ sel: $section, state: 'enter' });
   // await animateText({ sel: $p, visible: true });
   await typer.reveal($p);
-  await pause(4);
+  await pause(1.5);
   await revealFigure();
   await slide({ sel: $intertitle, state: 'exit' });
   await pause(0.25);

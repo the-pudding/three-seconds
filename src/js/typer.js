@@ -5,7 +5,7 @@ function reveal(sel) {
     const base = firstBB.top;
     const h = firstBB.height;
     const id = d3.select(sel.node().parentNode.parentNode).attr('id');
-    const extra = id === 'report' ? 1500 : 0;
+    const extra = id === 'report' ? 1000 : 0;
     $span
       .transition()
       .duration(300)
@@ -14,7 +14,7 @@ function reveal(sel) {
         const off = (top - base) / h;
         const html = d3.select(n[i]).html();
         const hasEm = html.includes('<em>') && !extra;
-        const hi = hasEm ? 1500 : 0;
+        const hi = hasEm && id !== 'question' ? 1500 : 0;
         return (i > 1 ? extra : 0) + hi + off * 250;
       })
       .ease(d3.easeCubicOut)

@@ -12,10 +12,6 @@ const $figure = d3.select('#l2m');
 const $flipbook = $section.select('#flipbook-l2m');
 const $flipbook2 = $section.select('#flipbook-spike');
 
-let timeStart = 0;
-let timer = null;
-let done1 = false;
-
 function revealFigure() {
   return new Promise(resolve => {
     $figure.style('opacity', 1);
@@ -86,52 +82,46 @@ function scaleFlip() {
   });
 }
 
-function tick() {
-  const cur = d3.now();
-  const diff = (cur - timeStart) / 1000;
-  if (diff > 1.5 && !done1) {
-    $flipbook
-      .selectAll('img')
-      .transition()
-      .ease(d3.easeCubicOut)
-      .duration(500)
-      .style('transform', `scale(2)`);
-    done1 = true;
-  }
-}
-
-function tickStart() {
-  timeStart = d3.now();
-  timer = d3.timer(tick);
-  return Promise.resolve();
-}
-
-function tickStop() {
-  timer.stop();
+function reverseReaction() {
+  $flipbook2
+    .transition()
+    .duration(250)
+    .ease(d3.easeCubicIn)
+    .style('left', `${WIDTH * 1.375}px`)
+    // .style('bottom', `${HEIGHT * 0.5}px`)
+    .on('end', () => {
+      $flipbook2.classed('is-visible', false);
+    });
 }
 
 function reaction() {
-  return new Promise(resolve => {
-    const { width, height, top } = $flipbook.node().getBoundingClientRect();
-    $flipbook2.style('width', `${width}px`);
-
-    const h = $flipbook2.node().offsetHeight;
-    $flipbook2.style('bottom', `${HEIGHT}px`).classed('is-visible', true);
-
-    d3.timeout(resolve, 300);
-    $flipbook2
-      .transition()
-      .duration(500)
-      .ease(d3.easeCubicOut)
-      .style('bottom', `${HEIGHT - top - height / 2}px`);
-    // .on('end', resolve);
-  });
+  $flipbook2
+    .transition()
+    .duration(500)
+    .delay(1250)
+    .ease(d3.easeCubicOut)
+    .style('left', `${WIDTH * (0.815 - 0.05)}px`)
+    .on('end', () => {
+      d3.timeout(reverseReaction, 2000);
+    })
+    .on('start', () => {
+      const h = $flipbook2.node().offsetWidth;
+      const hf = $flipbook.node().offsetHeight / 2;
+      $flipbook2
+        .style('top', `${HEIGHT / 2 + hf}px`)
+        .style('height', `${h}px`)
+        .classed('is-visible', true);
+    });
+  d3.timeout(() => {
+    flipbook.play({ id: '#flipbook-spike', loops: 3 });
+  }, 1250);
+  return Promise.resolve();
 }
 
 async function run() {
   await slide({ sel: $section, state: 'enter' });
   await typer.reveal($p);
-  await pause(5);
+  await pause(4);
   await slide({ sel: $intertitle, state: 'exit' });
   await revealFigure();
   await pause(1);
@@ -139,11 +129,10 @@ async function run() {
   await pause(1);
   scaleFlip();
   animateText({ sel: $section.select('.observe'), state: 'visible' });
-  await tickStart();
-  await flipbook.play({ id: '#flipbook-l2m', early: 0.85 });
+  // await tickStart();
   await reaction();
-  await flipbook.play({ id: '#flipbook-spike', early: 0.75, loops: 2 });
-  await tickStop();
+  await flipbook.play({ id: '#flipbook-l2m', early: 0.9 });
+  // await tickStop();
   await slide({ sel: $section, state: 'exit' });
   return true;
 }

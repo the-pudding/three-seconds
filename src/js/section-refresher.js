@@ -89,7 +89,7 @@ function paint() {
 async function run() {
   await slide({ sel: $section, state: 'enter' });
   await typer.reveal($p);
-  await pause(3.5);
+  await pause(1.5);
   await slide({ sel: $intertitle, state: 'exit' });
   await toggleWade('enter');
   await pause(0.25);

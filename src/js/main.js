@@ -10,6 +10,7 @@ import Time from './section-time';
 import Average from './section-average';
 import Report from './section-report';
 import Outro from './section-outro';
+import Question from './section-question';
 import Fin from './section-fin';
 import typer from './typer';
 
@@ -17,13 +18,14 @@ const $main = d3.select('main');
 
 async function runAll() {
   const start = d3.now();
-  await Intro.run();
-  await Refresher.run();
-  await Average.run();
-  await Time.run();
+  // await Intro.run();
+  // await Refresher.run();
+  // await Average.run();
+  // await Time.run();
   await Report.run();
   await Outro.run();
-  await Fin.run();
+  await Question.run();
+  // await Fin.run();
   const end = d3.now();
   const diff = end - start;
   const frames = (diff / 1000) * 60;
@@ -58,6 +60,8 @@ window.renderD3Video = async function renderD3Video({ width, height }) {
   Average.resize();
   Report.resize();
   Outro.resize();
+  Question.resize();
+  Fin.resize();
 
   await flipbook.init();
 
@@ -81,6 +85,8 @@ function init() {
       Average.init({ data: average });
       Report.init();
       Outro.init();
+      Question.init();
+      Fin.init();
       d3.timeout(devStart, 100);
     })
     .catch(console.error);
