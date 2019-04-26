@@ -72,7 +72,7 @@ window.renderD3Video = async function renderD3Video({ width, height }) {
 function devStart() {
   if (window.currentTime === undefined) {
     window.DEV = true;
-    window.renderD3Video({ width: 1080, height: 1920 });
+    window.renderD3Video({ width: 1080, height: 1080 });
   }
 }
 

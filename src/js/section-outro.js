@@ -1,4 +1,4 @@
-/* global d3 WIDTH HEIGHT FONT_SIZE */
+/* global d3 WIDTH HEIGHT FONT_SIZE SQUARE */
 import slide from './slide';
 import animateText from './animate-text';
 import pause from './pause';
@@ -75,7 +75,7 @@ function reverseReaction() {
     .transition()
     .duration(500)
     .ease(d3.easeCubicIn)
-    .style('left', `${WIDTH * 1.375}px`)
+    .style('left', `${WIDTH * (SQUARE ? 1.325 : 1.375)}px`)
     // .style('bottom', `${HEIGHT * 0.5}px`)
     .on('end', () => {
       $flipbook2.classed('is-visible', false);
@@ -88,7 +88,7 @@ function reaction() {
     .duration(500)
     .delay(4500)
     .ease(d3.easeCubicOut)
-    .style('left', `${WIDTH * (0.815 - 0.05)}px`)
+    .style('left', `${WIDTH * ((SQUARE ? 0.83 : 0.815) - 0.05)}px`)
     .on('end', () => {
       d3.timeout(reverseReaction, 4000);
     })

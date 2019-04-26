@@ -28,7 +28,11 @@ async function run() {
   return true;
 }
 
-function resize() {}
+function resize() {
+  if (SQUARE) {
+    $p.html('<span><em>What’s the point?</em></span>');
+  }
+}
 
 function init() {}
 

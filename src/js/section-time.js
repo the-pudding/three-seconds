@@ -31,13 +31,13 @@ const scaleX = d3.scaleBand().paddingInner(BAND_PAD);
 const scaleY = d3.scaleLinear().clamp(true);
 
 function toggleHarden(state) {
-  const bottom = (SQUARE ? 0.352 : 0.3675) * HEIGHT;
+  const bottom = (SQUARE ? 0.32 : 0.3675) * HEIGHT;
   if (state === 'enter')
     $harden
       .transition()
       .duration(500)
       .ease(d3.easeCubicOut)
-      .style('bottom', `${HEIGHT * (SQUARE ? 0.492 : 0.515)}px`);
+      .style('bottom', `${HEIGHT * (SQUARE ? 0.44 : 0.515)}px`);
   else if (state === 'drop') {
     $harden
       .transition()
@@ -154,7 +154,7 @@ function resize() {
     .style('width', `${chartWidth + margin * 2}px`)
     .style('height', `${chartHeight + margin * 6}px`);
 
-  $vis.attr('transform', `translate(${margin}, ${margin * 2})`);
+  $vis.attr('transform', `translate(${margin}, ${margin * (SQUARE ? 3 : 2)})`);
 
   $vis
     .select('.quarter')

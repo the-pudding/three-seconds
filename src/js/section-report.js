@@ -87,7 +87,7 @@ function reverseReaction() {
     .transition()
     .duration(250)
     .ease(d3.easeCubicIn)
-    .style('left', `${WIDTH * 1.375}px`)
+    .style('left', `${WIDTH * (SQUARE ? 1.325 : 1.375)}px`)
     // .style('bottom', `${HEIGHT * 0.5}px`)
     .on('end', () => {
       $flipbook2.classed('is-visible', false);
@@ -100,7 +100,7 @@ function reaction() {
     .duration(500)
     .delay(1250)
     .ease(d3.easeCubicOut)
-    .style('left', `${WIDTH * (0.815 - 0.05)}px`)
+    .style('left', `${WIDTH * ((SQUARE ? 0.83 : 0.815) - 0.05)}px`)
     .on('end', () => {
       d3.timeout(reverseReaction, 2000);
     })

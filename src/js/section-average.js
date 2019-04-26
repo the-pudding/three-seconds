@@ -101,7 +101,7 @@ async function run() {
 
 function resize() {
   const margin = Math.floor(WIDTH * 0.05);
-  const fontSize = Math.floor(FONT_SIZE * 0.67);
+  const fontSize = Math.floor(FONT_SIZE * (SQUARE ? 0.5 : 0.67));
   const radius = Math.floor(fontSize * 0.5);
 
   chartWidth = WIDTH - margin * 2;
