@@ -94,10 +94,12 @@ async function run() {
   await toggleWade('enter');
   await pause(0.25);
   await toggleDirk('enter');
-  await pause(2);
+  await pause(2.5);
   await tickStart();
   await pause(3);
   await tickStop();
+  await paint();
+  await paint();
   await paint();
   await paint();
   await paint();
